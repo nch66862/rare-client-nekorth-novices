@@ -47,11 +47,11 @@ export const Login = () => {
                     <h2>Please sign in</h2>
                     <fieldset>
                         <label htmlFor="inputEmail"> Username </label>
-                        <input ref={username} type="text" id="username" className="form-control" defaultValue="me@me.com" placeholder="my rare username" required autoFocus />
+                        <input ref={username} type="text" id="username" className="form-control" placeholder="my rare username" required autoFocus autoComplete="username" />
                     </fieldset>
                     <fieldset>
                         <label htmlFor="inputPassword"> Password </label>
-                        <input ref={password} type="password" id="password" className="form-control" defaultValue="me" placeholder="Password" required />
+                        <input ref={password} type="password" id="password" className="form-control" placeholder="Password" required autoComplete="password" />
                     </fieldset>
                     <fieldset style={{
                         textAlign:"center"
