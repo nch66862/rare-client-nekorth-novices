@@ -6,13 +6,13 @@ export const PostReactionProvider = (props) => {
   const [postReactions, setPostReactions] = useState([])
 
   const getPostReactionsById = (postId) => {
-    return fetch(`http://localhost:8088/postreactions/${postId}`)
+    return fetch(`http://localhost:8000/postreactions/${postId}`)
     .then(res => res.json())
     .then(setPostReactions)
   }
 
   const addReaction = (postReaction) => {
-    return fetch("http://localhost:8088/postreactions", {
+    return fetch("http://localhost:8000/postreactions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
