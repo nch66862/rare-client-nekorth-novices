@@ -27,7 +27,7 @@ export const Register = (props) => {
                 "profile_image_url": "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png",
             }
 
-            return fetch("http://127.0.0.1:8088/users", {
+            return fetch("http://127.0.0.1:8000/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -38,7 +38,7 @@ export const Register = (props) => {
                 .then(res => res.json())
                 .then(res => {
                     if ("valid" in res && res.valid) {
-                        localStorage.setItem("rare_user_id", res.token)
+                        localStorage.setItem("rare_user_token", res.token)
                         history.push("/")
                     }
                 })
