@@ -11,48 +11,56 @@ import { PostReactionProvider } from "./postReaction/PostReactionProvider"
 import { ReactionProvider } from "./reaction/ReactionProvider"
 import { ReactionList } from "./reaction/ReactionList"
 import { UserList } from "./users/UserList"
-import { UserProvider } from "./users/UserProvider"
+import { UserContext, UserProvider } from "./users/UserProvider"
 import { TagList } from "./tags/TagList"
 import { TagProvider } from "./tags/TagProvider"
 import { UserDetail } from "./users/UserDetail"
 
 export const ApplicationViews = () => {
+    const { checkAuthenticated } = useContext(UserContext)
     return <>
         <main style={{
             margin: "5rem 2rem",
             lineHeight: "1.75rem"
         }}>
             <Route exact path="/tags">
+                {checkAuthenticated()}
                 <TagProvider>
                     <TagList />
                 </TagProvider>
             </Route>
             <Route exact path="/categories">
+                {checkAuthenticated()}
                 <CategoryProvider>
                     <CategoryList />
                 </CategoryProvider>
             </Route>
             <Route exact path="/reactions">
+                {checkAuthenticated()}
                 <ReactionProvider>
                     <ReactionList />
                 </ReactionProvider>
             </Route>
             <Route exact path="/posts">
+                {checkAuthenticated()}
                 <PostProvider>
                     <PostList />
                 </PostProvider>
             </Route>
             <Route exact path="/posts/my-posts">
+                {checkAuthenticated()}
                 <PostProvider>
                     <PostList />
                 </PostProvider>
             </Route>
             <Route exact path="/posts/unapproved-posts">
+                {checkAuthenticated()}
                 <PostProvider>
                     <PostList />
                 </PostProvider>
             </Route>
             <Route exact path="/posts/create">
+                {checkAuthenticated()}
                 <PostProvider>
                     <CategoryProvider>
                         <TagProvider>
@@ -62,22 +70,25 @@ export const ApplicationViews = () => {
                 </PostProvider>
             </Route>
             <Route exact path="/posts/detail/:postId(\d+)">
+                {checkAuthenticated()}
                 <PostReactionProvider>
-                <ReactionProvider>
-                <PostProvider>
-                    <CommentProvider>
-                        <PostDetail />
-                    </CommentProvider>
-                </PostProvider>
-                </ReactionProvider>
+                    <ReactionProvider>
+                        <PostProvider>
+                            <CommentProvider>
+                                <PostDetail />
+                            </CommentProvider>
+                        </PostProvider>
+                    </ReactionProvider>
                 </PostReactionProvider>
             </Route>
             <UserProvider>
                 <Route exact path="/users">
-                    <UserList/>
+                    {checkAuthenticated()}
+                    <UserList />
                 </Route>
                 <Route exact path="/users/detail/:userId(\d+)">
-                    <UserDetail/>
+                    {checkAuthenticated()}
+                    <UserDetail />
                 </Route>
             </UserProvider>
 

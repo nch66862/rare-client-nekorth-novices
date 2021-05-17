@@ -1,4 +1,5 @@
 import React, { createContext, useState } from "react";
+import { Redirect } from "react-router-dom"
 
 export const UserContext = createContext()
 
@@ -55,6 +56,12 @@ export const UserProvider = (props) => {
         .then(res => res.json())
         .then(res => setAdmin(res.isAdmin))
     }
+    const checkAuthenticated = () => {
+        if (localStorage.getItem("rare_user_id")) {
+        } else {
+            return <Redirect to="/login" />
+        }
+    }
     const changeAuthorStatus = (userId, action) => {
         return fetch(`http://localhost:8000/active_status`,{
             method:"PUT",
@@ -67,7 +74,7 @@ export const UserProvider = (props) => {
         })
     }
     return (
-        <UserContext.Provider value={{getAllUsers, users, getUserById, subscribe, checkSubscribed, unsubscribe, checkAdmin, admin, changeAuthorStatus}}>
+        <UserContext.Provider value={{getAllUsers, users, getUserById, subscribe, checkSubscribed, unsubscribe, checkAdmin, admin, changeAuthorStatus, checkAuthenticated}}>
             {props.children}
         </UserContext.Provider>
         )
