@@ -13,7 +13,7 @@ export const UserList = () => {
         <>
         {rareUsers?.map(rareUser => {
                 return(
-                    <Card style={{ width: '18rem' }}>
+                    <Card key={rareUser.id} style={{ width: '18rem' }}>
                         <CardBody>
                             <CardTitle>{rareUser.user.first_name} {rareUser.user.last_name}</CardTitle>
                             <CardText>
