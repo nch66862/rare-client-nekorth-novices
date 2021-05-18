@@ -4,10 +4,9 @@ import { Modal, Button, ModalHeader, ModalBody, ModalFooter } from "reactstrap"
 import { UserContext } from "../users/UserProvider"
 
 export const ReactionList = () => {
-  const {reactions, getReactions, createReaction} = useContext(ReactionContext)
+  const {reactions, getReactions, createReaction, createReactionImageString, b64, setB64} = useContext(ReactionContext)
   const [showForm, setShowForm] = useState(false)
   const [reaction, setReaction] = useState({
-    "id": 0,
     "label": "",
     "image_url": ""
   })
@@ -15,6 +14,13 @@ export const ReactionList = () => {
   useEffect(() => {
     getReactions()
   }, [])
+
+  useEffect(() => {
+    let reactionCopy = {...reaction}
+    reactionCopy.image_url = b64
+    console.log("updated")
+    setReaction(reactionCopy)
+  }, [b64])
   
   const handleShowForm = () => {
     setShowForm(true)
@@ -22,22 +28,21 @@ export const ReactionList = () => {
   const handleCloseForm = () => {
     setShowForm(false)
     setReaction({
-      "id": 0,
       "label": "",
       "image_url": ""
     })
   }
   const saveReaction = () => {
-    if(reaction.id === 0){
       createReaction(reaction)
       .then(handleCloseForm)
-    }
+      setB64("")
   }
   const handleInputChange = (event) => {
     let tempReaction = {...reaction}
     tempReaction[event.target.id] = event.target.value
     setReaction(tempReaction)
   }
+  console.log(reaction)
   return(
     <>
     <h3>Reactions</h3>
@@ -47,8 +52,7 @@ export const ReactionList = () => {
         <form className="reactionForm">
           <label htmlFor="reactionLabel">Label: </label>
           <input type="text" id="label" onChange={handleInputChange} value={reaction.label}></input><br></br>
-          <label htmlFor="reactionImage">Image URL: </label>
-          <input type="text" id="image_url" onChange={handleInputChange} value={reaction.image_url}></input>
+          <input type="file" id="reaction_image" onChange={createReactionImageString} />
         </form>
       </ModalBody>
       <ModalFooter>
