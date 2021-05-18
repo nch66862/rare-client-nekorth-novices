@@ -6,12 +6,20 @@ export const UserProvider = (props) => {
     const [users, setUsers] = useState([])
     const [admin, setAdmin] = useState(false)
     const getAllUsers = () => {
-        return fetch("http://localhost:8000/users")
+        return fetch("http://localhost:8000/users",{
+            headers:{
+                "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
+            }
+        })
         .then(res => res.json())
         .then(setUsers)
     }
     const getUserById = (userId) =>{
-        return fetch(`http://localhost:8000/users/${userId}`)
+        return fetch(`http://localhost:8000/users/${userId}`,{
+            headers:{
+                "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
+            }
+        })
         .then(res => res.json())
     }
     // const getSubcriptions = (userId) => {
@@ -23,7 +31,8 @@ export const UserProvider = (props) => {
         return fetch("http://localhost:8000/subscribed",{
             method: "POST",
             headers:{
-                "Content-Type":"application/json"
+                "Content-Type":"application/json",
+                "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
             },
             body: JSON.stringify({
                 "follower_id" : parseInt(followerId),
@@ -36,7 +45,8 @@ export const UserProvider = (props) => {
         return fetch("http://localhost:8000/subscriptions",{
             method:"POST",
             headers:{
-                "Content-Type":"application/json"
+                "Content-Type":"application/json",
+                "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
             },
             body: JSON.stringify(subscription)
         })
@@ -45,13 +55,18 @@ export const UserProvider = (props) => {
         return fetch("http://localhost:8000/unsubscribe",{
             method:"PATCH",
             headers:{
-                "Content-Type":"application/json"
+                "Content-Type":"application/json",
+                "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
             },
             body: JSON.stringify(subscription)
         })
     }
     const checkAdmin = () => {
-        return fetch(`http://localhost:8000/users/${localStorage.getItem("rare_user_id")}`)
+        return fetch(`http://localhost:8000/users/${localStorage.getItem("rare_user_id")}`,{
+            headers:{
+                "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
+            }
+        })
         .then(res => res.json())
         .then(res => setAdmin(res.isAdmin))
     }
@@ -59,7 +74,8 @@ export const UserProvider = (props) => {
         return fetch(`http://localhost:8000/active_status`,{
             method:"PUT",
             headers:{
-                "Content-Type":"application/json"
+                "Content-Type":"application/json",
+                "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
             },
             body: JSON.stringify({"action": action,
                                     "user_id": userId,
