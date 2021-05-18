@@ -1,6 +1,5 @@
 import React, { useRef } from "react"
 import { Link, useHistory } from "react-router-dom"
-import { HumanDate } from "../utils/HumanDate"
 import "./Auth.css"
 
 export const Register = (props) => {
@@ -11,7 +10,7 @@ export const Register = (props) => {
     const password = useRef()
     const verifyPassword = useRef()
     const passwordDialog = useRef()
-    const displayName = useRef()
+    const username = useRef()
     const history = useHistory()
 
     const handleRegister = (e) => {
@@ -19,18 +18,16 @@ export const Register = (props) => {
 
         if (password.current.value === verifyPassword.current.value) {
             const newUser = {
-                "username": email.current.value,
+                "username": username.current.value,
                 "first_name": firstName.current.value,
                 "last_name": lastName.current.value,
                 "email": email.current.value,
                 "password": password.current.value,
-                "display_name": displayName.current.value,
                 "bio": bio.current.value,
                 "profile_image_url": "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png",
-                "created_on": HumanDate()
             }
 
-            return fetch("http://127.0.0.1:8088/users", {
+            return fetch("http://127.0.0.1:8000/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -68,8 +65,8 @@ export const Register = (props) => {
                     <input ref={lastName} type="text" name="lastName" className="form-control" placeholder="Last name" required />
                 </fieldset>
                 <fieldset>
-                    <label htmlFor="displayName"> Display Name </label>
-                    <input ref={displayName} type="text" name="displayName" className="form-control" placeholder="Display name" required />
+                    <label htmlFor="displayName"> Username </label>
+                    <input ref={username} type="text" name="displayName" className="form-control" placeholder="Display name" required />
                 </fieldset>
                 <fieldset>
                     <label htmlFor="bio"> Bio </label>

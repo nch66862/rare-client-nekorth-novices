@@ -6,12 +6,12 @@ export const CategoryProvider = (props) => {
     const [categories, setCategorys] = useState([])
 
     const getAllCategories = () => {
-        return fetch("http://localhost:8088/categories")
+        return fetch("http://localhost:8000/categories")
         .then(res => res.json())
         .then(setCategorys)
     }
     const addCategory = (category) => {
-        return fetch("http://localhost:8088/categories",{
+        return fetch("http://localhost:8000/categories",{
             method: "POST",
             headers:{
                 "Content-Type":"application/json"
@@ -21,13 +21,13 @@ export const CategoryProvider = (props) => {
         .then(getAllCategories)
     }
     const deleteCategory = (categoryId) => {
-        return fetch(`http://localhost:8088/categories/${categoryId}`,{
+        return fetch(`http://localhost:8000/categories/${categoryId}`,{
             method: "DELETE"
         })
         .then(getAllCategories)
     }
     const updateCategory = (category) => {
-        return fetch(`http://localhost:8088/categories/${category.id}`,{
+        return fetch(`http://localhost:8000/categories/${category.id}`,{
             method: "PUT",
             headers:{
                 "Content-Type":"application/json"

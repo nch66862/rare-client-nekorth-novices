@@ -6,21 +6,21 @@ export const UserProvider = (props) => {
     const [users, setUsers] = useState([])
     const [admin, setAdmin] = useState(false)
     const getAllUsers = () => {
-        return fetch("http://localhost:8088/users")
+        return fetch("http://localhost:8000/users")
         .then(res => res.json())
         .then(setUsers)
     }
     const getUserById = (userId) =>{
-        return fetch(`http://localhost:8088/users/${userId}`)
+        return fetch(`http://localhost:8000/users/${userId}`)
         .then(res => res.json())
     }
     // const getSubcriptions = (userId) => {
-    //     return fetch(`http://localhost:8088/subscriptions/${userId}`)
+    //     return fetch(`http://localhost:8000/subscriptions/${userId}`)
     //     .then(res => res.json())
     //     .then(res => console.log("subcriptions: ",res))
     // }
     const checkSubscribed = (followerId, authorId) => {
-        return fetch("http://localhost:8088/subscribed",{
+        return fetch("http://localhost:8000/subscribed",{
             method: "POST",
             headers:{
                 "Content-Type":"application/json"
@@ -33,7 +33,7 @@ export const UserProvider = (props) => {
         .then(res => res.json())
     }
     const subscribe = (subscription) => {
-        return fetch("http://localhost:8088/subscriptions",{
+        return fetch("http://localhost:8000/subscriptions",{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
@@ -42,7 +42,7 @@ export const UserProvider = (props) => {
         })
     }
     const unsubscribe = (subscription) => {
-        return fetch("http://localhost:8088/unsubscribe",{
+        return fetch("http://localhost:8000/unsubscribe",{
             method:"PATCH",
             headers:{
                 "Content-Type":"application/json"
@@ -51,12 +51,12 @@ export const UserProvider = (props) => {
         })
     }
     const checkAdmin = () => {
-        return fetch(`http://localhost:8088/users/${localStorage.getItem("rare_user_id")}`)
+        return fetch(`http://localhost:8000/users/${localStorage.getItem("rare_user_id")}`)
         .then(res => res.json())
         .then(res => setAdmin(res.isAdmin))
     }
     const changeAuthorStatus = (userId, action) => {
-        return fetch(`http://localhost:8088/active_status`,{
+        return fetch(`http://localhost:8000/active_status`,{
             method:"PUT",
             headers:{
                 "Content-Type":"application/json"
