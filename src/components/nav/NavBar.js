@@ -8,7 +8,7 @@ export const NavBar = () => {
     const {admin, checkAdmin} = useContext(UserContext)
     const history = useHistory()
     useEffect(() => {
-        checkAdmin()
+        
     }, [])
 
     return (

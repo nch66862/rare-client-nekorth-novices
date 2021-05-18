@@ -7,36 +7,27 @@ export const PostList = () => {
   const [posts, setPosts] = useState([])
   const [gotApproval, setGotApproval] = useState(false)
   const { getPostsByUserId, getAllPosts, approvePost } = useContext(PostContext)
-  const currentUser = parseInt(localStorage.getItem("rare_user_id"))
   const history = useHistory()
   const urlPath = history.location.pathname
 
   useEffect(() => {
     if (urlPath === "/posts/my-posts") {
-      getPostsByUserId(currentUser)
-        .then(result => {
-          const sortedArrayOfPosts = sortThePosts(result)
-          setPosts(sortedArrayOfPosts)
-        })
+      console.log("myposts, ")
+      getPostsByUserId()
+        .then(setPosts)
     }
     else if (urlPath === "/posts") {
+      console.log("allposts")
       getAllPosts()
-        .then(result => {
-          const sortedArrayOfPosts = sortThePosts(result)
-          const approvedPosts = filterApprovedPosts(sortedArrayOfPosts)
-          const postsNotFromTheFuture = nonFuturePosts(approvedPosts)
-          setPosts(postsNotFromTheFuture)
-        })
+        .then(setPosts)
     }
     else if (urlPath === "/posts/unapproved-posts") {
       getAllPosts()
         .then(result => {
-          const sortedArrayOfPosts = sortThePosts(result)
-          const unApprovedPosts = filterUnapprovedPosts(sortedArrayOfPosts)
-          setPosts(unApprovedPosts)
+          
         })
     }
-  }, [gotApproval === true])
+  }, [])
 
   const handleApprovePost = (postId) => {
     approvePost(postId)
@@ -53,10 +44,10 @@ export const PostList = () => {
           return (<ListGroupItem key={post.id}>
             <ListGroupItemHeading>{post?.title}</ListGroupItemHeading>
             <ListGroupItemText>
-              Author: {post?.user.displayName}
+              Author: {post?.user.user?.username}
             </ListGroupItemText>
             <ListGroupItemText>
-              Category: {post?.category.label}
+              Category: {post?.category?.label}
             </ListGroupItemText>
             <Link to={`/posts/detail/${post.id}`}>
               Post Details
@@ -71,15 +62,6 @@ export const PostList = () => {
   )
 }
 
-const sortThePosts = (posts) => {
-  return posts?.sort((a, b) => {
-    const aDate = new Date(a.date)
-    const bDate = new Date(b.date)
-    a.date = aDate
-    b.date = bDate
-    return b.date - a.date
-  })
-}
 
 const filterApprovedPosts = (posts) => {
   return posts?.filter(post => {

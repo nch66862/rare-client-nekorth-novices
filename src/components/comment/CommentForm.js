@@ -5,19 +5,11 @@ import "./CommentForm.css"
 
 export const CommentForm = (props) => {
   const {createComment, newComment, setNewComment, editComment} = useContext(CommentContext)
-
-  const currentUser = parseInt(localStorage.getItem("rare_user_id"))
-  const today = new Date()
-  const currentDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
-
   const handleControlledInputChange = (event) => {
     let comment = {...newComment}
-
     comment[event.target.id] = event.target.value
-
     setNewComment(comment)
   }
-
   const handleSubmitClick = (event) => {
     if(newComment.id){
       editComment(newComment)
@@ -25,21 +17,15 @@ export const CommentForm = (props) => {
       createComment(newComment)
     }
     setNewComment({
-      "subject": "",
       "content": "",
-      "post_id": props.postId,
-      "author_id": currentUser,
-      "created_on": currentDate
+      "post_id": props.postId
     })
   }
 
   useEffect(() => {
     setNewComment({
-      "subject": "",
       "content": "",
-      "post_id": props.postId,
-      "author_id": currentUser,
-      "created_on": currentDate  
+      "post_id": props.postId
     })
   }, [])
 
@@ -47,10 +33,6 @@ export const CommentForm = (props) => {
     <form className="commentForm" autoComplete="off">
       <h2 className="commentForm__title">New Comment</h2>
       <fieldset>
-        <div className="form-group">
-          <label htmlFor="subject">Subject: </label>
-          <input type="text" id="subject" onChange={handleControlledInputChange} required autoFocus className="form-control" placeholder="Subject" value={newComment.subject} />
-        </div>
         <div className="form-group">
           <label htmlFor="content">Comment: </label>
           <input type="text" id="content" onChange={handleControlledInputChange} required className="form-control" placeholder="Comment" value={newComment.content} />
