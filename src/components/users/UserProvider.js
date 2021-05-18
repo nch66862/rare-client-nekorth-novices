@@ -4,7 +4,7 @@ import { Redirect, useHistory } from "react-router-dom"
 export const UserContext = createContext()
 
 export const UserProvider = (props) => {
-    const [users, setUsers] = useState([])
+    const [rareUsers, setUsers] = useState([])
     const [admin, setAdmin] = useState(false)
     const history = useHistory()
     const getAllUsers = () => {
@@ -95,7 +95,7 @@ export const UserProvider = (props) => {
         })
     }
     return (
-        <UserContext.Provider value={{ getAllUsers, users, getUserById, subscribe, checkSubscribed, unsubscribe, checkAdmin, admin, changeAuthorStatus, checkAuthenticated }}>
+        <UserContext.Provider value={{ getAllUsers, rareUsers, getUserById, subscribe, checkSubscribed, unsubscribe, checkAdmin, admin, changeAuthorStatus, checkAuthenticated }}>
             {props.children}
         </UserContext.Provider>
     )
