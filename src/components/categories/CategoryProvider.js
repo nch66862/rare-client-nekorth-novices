@@ -3,7 +3,7 @@ import  React, { createContext, useState } from "react";
 export const CategoryContext = createContext()
 
 export const CategoryProvider = (props) => {
-    const [categories, setCategorys] = useState([])
+    const [categories, setCategories] = useState([])
 
     const getAllCategories = () => {
         return fetch("http://localhost:8000/categories",{
@@ -12,7 +12,7 @@ export const CategoryProvider = (props) => {
             }
         })
         .then(res => res.json())
-        .then(setCategorys)
+        .then(setCategories)
     }
     const addCategory = (category) => {
         return fetch("http://localhost:8000/categories",{
