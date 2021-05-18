@@ -4,7 +4,7 @@ import "./Auth.css"
 
 
 export const Login = () => {
-    const email = useRef()
+    const username = useRef()
     const password = useRef()
     const invalidDialog = useRef()
     const history = useHistory()
@@ -12,14 +12,14 @@ export const Login = () => {
     const handleLogin = (e) => {
         e.preventDefault()
 
-        return fetch("http://127.0.0.1:8088/login", {
+        return fetch("http://127.0.0.1:8000/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             },
             body: JSON.stringify({
-                username: email.current.value,
+                username: username.current.value,
                 password: password.current.value
             })
         })
@@ -46,12 +46,12 @@ export const Login = () => {
                     <h1>Rare Publishing</h1>
                     <h2>Please sign in</h2>
                     <fieldset>
-                        <label htmlFor="inputEmail"> Email address </label>
-                        <input ref={email} type="email" id="email" className="form-control" defaultValue="me@me.com" placeholder="Email address" required autoFocus />
+                        <label htmlFor="inputEmail"> Username </label>
+                        <input ref={username} type="text" id="username" className="form-control" placeholder="my rare username" required autoFocus autoComplete="username" />
                     </fieldset>
                     <fieldset>
                         <label htmlFor="inputPassword"> Password </label>
-                        <input ref={password} type="password" id="password" className="form-control" defaultValue="me" placeholder="Password" required />
+                        <input ref={password} type="password" id="password" className="form-control" placeholder="Password" required autoComplete="password" />
                     </fieldset>
                     <fieldset style={{
                         textAlign:"center"

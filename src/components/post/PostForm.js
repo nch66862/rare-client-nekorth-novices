@@ -58,6 +58,7 @@ export const PostForm = (props) => {
 
     return (
         <Form className="postForm" autoComplete="on">
+            {console.log(categories)}
             <h2 className="postForm__title">New Post</h2>
             <fieldset>
                 <FormGroup>
@@ -68,7 +69,7 @@ export const PostForm = (props) => {
                     <Label for="postCategory">Category</Label>
                     <Input onChange={handleControlledInputChange} type="select" name="selectCategory" id="category_id">
                         <option value="0">choose a category...</option>
-                        {categories.map(category => {
+                        {categories?.map(category => {
                             return <option key={category?.id} value={category?.id}>{category?.label}</option>
                         })}
                     </Input>
