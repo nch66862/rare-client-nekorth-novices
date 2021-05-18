@@ -5,7 +5,6 @@ import { CommentForm } from "../comment/CommentForm"
 import { PostContext } from "./PostProvider"
 import { CommentContext } from "../comment/CommentProvider"
 import { ReactionContext } from "../reaction/ReactionProvider"
-import { PostReactionContext } from "../postReaction/PostReactionProvider"
 import "./PostDetail.css"
 import {
   Card, CardText, CardBody,
@@ -18,7 +17,6 @@ export const PostDetail = () => {
   const {getPostById} = useContext(PostContext)
   const {comments} = useContext(CommentContext)
   const {getReactions, reactions} = useContext(ReactionContext)
-  const {postReactions, setPostReactions, getPostReactionsById, addReaction} = useContext(PostReactionContext)
 
   const [post, setPost] = useState({
     'id': 0,
@@ -41,20 +39,11 @@ export const PostDetail = () => {
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen)
 
   const handleReactionInput = (event) => {
-    if(postReactions.find(pr => pr.user_id === currentUser && pr.reaction_id === parseInt(event.target.id))){
-      return
-    }else {
       const newReaction = {
         "user_id": currentUser,
         "reaction_id": parseInt(event.target.id),
         "post_id": post.id
       }
-      let newPostReactions = [...postReactions]
-      newPostReactions.push(newReaction)
-
-      setPostReactions(newPostReactions)
-      addReaction(newReaction)
-  
       let newPost = {...post}
       let reactionIndex = newPost.reactions.findIndex(reaction => reaction.id === parseInt(event.target.id))
       if (newPost.reactions[reactionIndex]){
@@ -65,7 +54,7 @@ export const PostDetail = () => {
         foundReaction.count = 1
         newPost.reactions.push(foundReaction)
         setPost(newPost)
-      }
+      
     }
   }
 
@@ -73,7 +62,6 @@ export const PostDetail = () => {
     getPostById(parseInt(postId))
     .then(setPost)
     .then(getReactions)
-    .then(getPostReactionsById(parseInt(postId)))
   }, [comments])
 
   return (
