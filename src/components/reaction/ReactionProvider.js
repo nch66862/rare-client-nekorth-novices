@@ -9,7 +9,7 @@ export const ReactionProvider = (props) => {
     return fetch("http://localhost:8000/reactions",{
       headers:{
         "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
-      },
+      }
     })
     .then(res => res.json())
     .then(setReactions)
