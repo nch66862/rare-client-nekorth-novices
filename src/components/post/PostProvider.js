@@ -6,19 +6,28 @@ export const PostProvider = (props) => {
 
   const getAllPosts = () => {
     return fetch(`http://localhost:8000/posts`,{
-      headers: {"Authorization": `Token ${localStorage.getItem("rare_user_id")}`}
-
+      headers:{
+        "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
+      }
     })
     .then(res => res.json())
   }
 
   const getPostById = (id) => {
-    return fetch(`http://localhost:8000/posts/${id}`)
+    return fetch(`http://localhost:8000/posts/${id}`,{
+      headers:{
+        "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
+      }
+    })
     .then(res => res.json())
   }
 
   const getPostsByUserId = (userId) => {
-    return fetch(`http://localhost:8000/posts?user_id=${userId}`)
+    return fetch(`http://localhost:8000/posts?user_id=${userId}`,{
+      headers:{
+        "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
+      }
+    })
     .then(res => res.json())
   }
 
@@ -26,6 +35,7 @@ export const PostProvider = (props) => {
     return fetch("http://localhost:8000/posts", {
       method: "POST",
       headers: {
+        "Authorization": `Token ${localStorage.getItem("rare_user_id")}`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify(postBody)
@@ -37,7 +47,8 @@ export const PostProvider = (props) => {
     return fetch(`http://localhost:8000/approve/${postId}`, {
       method: "PATCH",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
       },
       body: JSON.stringify({})
     })

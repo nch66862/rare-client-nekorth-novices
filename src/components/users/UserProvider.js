@@ -8,13 +8,21 @@ export const UserProvider = (props) => {
     const [admin, setAdmin] = useState(false)
     const history = useHistory()
     const getAllUsers = () => {
-        return fetch("http://localhost:8000/users")
-            .then(res => res.json())
-            .then(setUsers)
+        return fetch("http://localhost:8000/users",{
+            headers:{
+                "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
+            }
+        })
+        .then(res => res.json())
+        .then(setUsers)
     }
-    const getUserById = (userId) => {
-        return fetch(`http://localhost:8000/users/${userId}`)
-            .then(res => res.json())
+    const getUserById = (userId) =>{
+        return fetch(`http://localhost:8000/users/${userId}`,{
+            headers:{
+                "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
+            }
+        })
+        .then(res => res.json())
     }
     // const getSubcriptions = (userId) => {
     //     return fetch(`http://localhost:8000/subscriptions/${userId}`)
@@ -24,8 +32,9 @@ export const UserProvider = (props) => {
     const checkSubscribed = (followerId, authorId) => {
         return fetch("http://localhost:8000/subscribed", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
             },
             body: JSON.stringify({
                 "follower_id": parseInt(followerId),
@@ -35,19 +44,21 @@ export const UserProvider = (props) => {
             .then(res => res.json())
     }
     const subscribe = (subscription) => {
-        return fetch("http://localhost:8000/subscriptions", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
+        return fetch("http://localhost:8000/subscriptions",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
             },
             body: JSON.stringify(subscription)
         })
     }
     const unsubscribe = (subscription) => {
-        return fetch("http://localhost:8000/unsubscribe", {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json"
+        return fetch("http://localhost:8000/unsubscribe",{
+            method:"PATCH",
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
             },
             body: JSON.stringify(subscription)
         })
@@ -70,10 +81,11 @@ export const UserProvider = (props) => {
             })
     }
     const changeAuthorStatus = (userId, action) => {
-        return fetch(`http://localhost:8000/active_status`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
+        return fetch(`http://localhost:8000/active_status`,{
+            method:"PUT",
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
             },
             body: JSON.stringify({
                 "action": action,

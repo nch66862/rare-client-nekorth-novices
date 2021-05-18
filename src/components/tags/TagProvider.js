@@ -6,7 +6,11 @@ export const TagProvider = (props) => {
     const [tags, setTags] = useState([])
 
     const getAllTags = () => {
-        return fetch("http://localhost:8000/tags")
+        return fetch("http://localhost:8000/tags",{
+            headers:{
+                "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
+            }
+        })
         .then(res => res.json())
         .then(setTags)
     }
@@ -14,6 +18,7 @@ export const TagProvider = (props) => {
         return fetch("http://localhost:8000/tags",{
             method: "POST",
             headers:{
+                "Authorization": `Token ${localStorage.getItem("rare_user_id")}`,
                 "Content-Type":"application/json"
             },
             body: JSON.stringify(tag)
@@ -22,7 +27,10 @@ export const TagProvider = (props) => {
     }
     const deleteTag = (tagId) => {
         return fetch(`http://localhost:8000/tags/${tagId}`,{
-            method: "DELETE"
+            method: "DELETE",
+            headers:{
+                "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
+            }
         })
         .then(getAllTags)
     }

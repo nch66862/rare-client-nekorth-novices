@@ -7,7 +7,6 @@ import { PostDetail } from "./post/PostDetail"
 import { PostForm } from "./post/PostForm"
 import { PostList } from "./post/PostList"
 import { PostProvider } from "./post/PostProvider"
-import { PostReactionProvider } from "./postReaction/PostReactionProvider"
 import { ReactionProvider } from "./reaction/ReactionProvider"
 import { ReactionList } from "./reaction/ReactionList"
 import { UserList } from "./users/UserList"
@@ -79,15 +78,13 @@ export const ApplicationViews = () => {
                 </Route>
                 <Route exact path="/posts/detail/:postId(\d+)">
                     <Protected>
-                        <PostReactionProvider>
-                            <ReactionProvider>
-                                <PostProvider>
-                                    <CommentProvider>
-                                        <PostDetail />
-                                    </CommentProvider>
-                                </PostProvider>
-                            </ReactionProvider>
-                        </PostReactionProvider>
+                        <ReactionProvider>
+                            <PostProvider>
+                                <CommentProvider>
+                                    <PostDetail />
+                                </CommentProvider>
+                            </PostProvider>
+                        </ReactionProvider>
                     </Protected>
                 </Route>
                 <Route exact path="/users">
