@@ -5,7 +5,10 @@ export const PostContext = createContext()
 export const PostProvider = (props) => {
 
   const getAllPosts = () => {
-    return fetch(`http://localhost:8000/posts`)
+    return fetch(`http://localhost:8000/posts`,{
+      headers: {"Authorization": `Token ${localStorage.getItem("rare_user_id")}`}
+
+    })
     .then(res => res.json())
   }
 

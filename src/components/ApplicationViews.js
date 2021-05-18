@@ -15,9 +15,9 @@ import { UserContext, UserProvider } from "./users/UserProvider"
 import { TagList } from "./tags/TagList"
 import { TagProvider } from "./tags/TagProvider"
 import { UserDetail } from "./users/UserDetail"
+import { Protected } from "./auth/Protected"
 
 export const ApplicationViews = () => {
-    const { checkAuthenticated } = useContext(UserContext)
     return <>
         <main style={{
             margin: "5rem 2rem",
@@ -25,70 +25,80 @@ export const ApplicationViews = () => {
         }}>
             <UserProvider>
                 <Route exact path="/tags">
-                    {checkAuthenticated()}
-                    <TagProvider>
-                        <TagList />
-                    </TagProvider>
+                    <Protected>
+                        <TagProvider>
+                            <TagList />
+                        </TagProvider>
+                    </Protected>
                 </Route>
                 <Route exact path="/categories">
-                    {checkAuthenticated()}
-                    <CategoryProvider>
-                        <CategoryList />
-                    </CategoryProvider>
+                    <Protected>
+                        <CategoryProvider>
+                            <CategoryList />
+                        </CategoryProvider>
+                    </Protected>
                 </Route>
                 <Route exact path="/reactions">
-                    {checkAuthenticated()}
-                    <ReactionProvider>
-                        <ReactionList />
-                    </ReactionProvider>
+                    <Protected>
+                        <ReactionProvider>
+                            <ReactionList />
+                        </ReactionProvider>
+                    </Protected>
                 </Route>
                 <Route exact path="/posts">
-                    {checkAuthenticated()}
-                    <PostProvider>
-                        <PostList />
-                    </PostProvider>
+                    <Protected>
+                        <PostProvider>
+                            <PostList />
+                        </PostProvider>
+                    </Protected>
                 </Route>
                 <Route exact path="/posts/my-posts">
-                    {checkAuthenticated()}
-                    <PostProvider>
-                        <PostList />
-                    </PostProvider>
+                    <Protected>
+                        <PostProvider>
+                            <PostList />
+                        </PostProvider>
+                    </Protected>
                 </Route>
                 <Route exact path="/posts/unapproved-posts">
-                    {checkAuthenticated()}
-                    <PostProvider>
-                        <PostList />
-                    </PostProvider>
+                    <Protected>
+                        <PostProvider>
+                            <PostList />
+                        </PostProvider>
+                    </Protected>
                 </Route>
                 <Route exact path="/posts/create">
-                    {checkAuthenticated()}
-                    <PostProvider>
-                        <CategoryProvider>
-                            <TagProvider>
-                                <PostForm />
-                            </TagProvider>
-                        </CategoryProvider>
-                    </PostProvider>
+                    <Protected>
+                        <PostProvider>
+                            <CategoryProvider>
+                                <TagProvider>
+                                    <PostForm />
+                                </TagProvider>
+                            </CategoryProvider>
+                        </PostProvider>
+                    </Protected>
                 </Route>
                 <Route exact path="/posts/detail/:postId(\d+)">
-                    {checkAuthenticated()}
-                    <PostReactionProvider>
-                        <ReactionProvider>
-                            <PostProvider>
-                                <CommentProvider>
-                                    <PostDetail />
-                                </CommentProvider>
-                            </PostProvider>
-                        </ReactionProvider>
-                    </PostReactionProvider>
+                    <Protected>
+                        <PostReactionProvider>
+                            <ReactionProvider>
+                                <PostProvider>
+                                    <CommentProvider>
+                                        <PostDetail />
+                                    </CommentProvider>
+                                </PostProvider>
+                            </ReactionProvider>
+                        </PostReactionProvider>
+                    </Protected>
                 </Route>
                 <Route exact path="/users">
-                    {checkAuthenticated()}
-                    <UserList />
+                    <Protected>
+                        <UserList />
+                    </Protected>
                 </Route>
                 <Route exact path="/users/detail/:userId(\d+)">
-                    {checkAuthenticated()}
-                    <UserDetail />
+                    <Protected>
+                        <UserDetail />
+                    </Protected>
                 </Route>
             </UserProvider>
         </main>
