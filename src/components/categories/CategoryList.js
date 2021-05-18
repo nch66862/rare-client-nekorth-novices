@@ -16,6 +16,7 @@ export const CategoryList = () => {
     useEffect(()=>{
         getAllCategories()
     },[])
+    
     const editCategory = (id,label) => {
         setCategory({
             "id":id,
