@@ -4,32 +4,28 @@ import { Card, Button, CardBody, CardTitle, CardText } from "reactstrap"
 import { UserContext } from "./UserProvider"
 
 export const UserList = () => {
-    const {users, getAllUsers, checkAdmin} = useContext(UserContext)
+    const {rareUsers, getAllUsers, checkAdmin} = useContext(UserContext)
     const history = useHistory()
     useEffect(()=>{
         getAllUsers()
     },[])
     return(
         <>
-        {users?.map(user => {
-            if(user.id !== parseInt(localStorage.getItem("rare_user_id"))){
+        {rareUsers?.map(rareUser => {
                 return(
-                    <Card style={{ width: '18rem' }}>
+                    <Card key={rareUser.id} style={{ width: '18rem' }}>
                         <CardBody>
-                            <CardTitle>{user.fullName}</CardTitle>
+                            <CardTitle>{rareUser.user.first_name} {rareUser.user.last_name}</CardTitle>
                             <CardText>
-                            {user.displayName}, <br></br>
-                            admin: {String(user.isAdmin)}, <br></br>
-                            active: {String(user.active)}
+                            @{rareUser.user.username} <br></br>
+                            admin: {String(rareUser.user.is_staff)} <br></br>
+                            active: {String(rareUser.user.is_active)}
                             </CardText>
-                            <Button variant="primary" onClick={e=> history.push(`/users/detail/${user.id}`)}>Details</Button>
+                            <Button variant="primary" onClick={e=> history.push(`/users/detail/${rareUser.id}`)}>Details</Button>
                         </CardBody>
                     </Card>
                 )
-            }else{
-                return <></>
-            }
         })}
         </>
     )
-} 
+}

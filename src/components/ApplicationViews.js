@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useContext } from "react"
 import { Route } from "react-router-dom"
 import { CategoryList } from "./categories/CategoryList"
 import { CategoryProvider } from "./categories/CategoryProvider"
@@ -10,10 +10,11 @@ import { PostProvider } from "./post/PostProvider"
 import { ReactionProvider } from "./reaction/ReactionProvider"
 import { ReactionList } from "./reaction/ReactionList"
 import { UserList } from "./users/UserList"
-import { UserProvider } from "./users/UserProvider"
+import { UserContext, UserProvider } from "./users/UserProvider"
 import { TagList } from "./tags/TagList"
 import { TagProvider } from "./tags/TagProvider"
 import { UserDetail } from "./users/UserDetail"
+import { Protected } from "./auth/Protected"
 
 export const ApplicationViews = () => {
     return <>
@@ -21,63 +22,82 @@ export const ApplicationViews = () => {
             margin: "5rem 2rem",
             lineHeight: "1.75rem"
         }}>
-            <Route exact path="/tags">
-                <TagProvider>
-                    <TagList />
-                </TagProvider>
-            </Route>
-            <Route exact path="/categories">
-                <CategoryProvider>
-                    <CategoryList />
-                </CategoryProvider>
-            </Route>
-            <Route exact path="/reactions">
-                <ReactionProvider>
-                    <ReactionList />
-                </ReactionProvider>
-            </Route>
-            <Route exact path="/posts">
-                <PostProvider>
-                    <PostList />
-                </PostProvider>
-            </Route>
-            <Route exact path="/posts/my-posts">
-                <PostProvider>
-                    <PostList />
-                </PostProvider>
-            </Route>
-            <Route exact path="/posts/unapproved-posts">
-                <PostProvider>
-                    <PostList />
-                </PostProvider>
-            </Route>
-            <Route exact path="/posts/create">
-                <PostProvider>
-                    <CategoryProvider>
-                        <TagProvider>
-                            <PostForm />
-                        </TagProvider>
-                    </CategoryProvider>
-                </PostProvider>
-            </Route>
-            <Route exact path="/posts/detail/:postId(\d+)">
-                <ReactionProvider>
-                <PostProvider>
-                    <CommentProvider>
-                        <PostDetail />
-                    </CommentProvider>
-                </PostProvider>
-                </ReactionProvider>
-            </Route>
             <UserProvider>
+                <Route exact path="/tags">
+                    <Protected>
+                        <TagProvider>
+                            <TagList />
+                        </TagProvider>
+                    </Protected>
+                </Route>
+                <Route exact path="/categories">
+                    <Protected>
+                        <CategoryProvider>
+                            <CategoryList />
+                        </CategoryProvider>
+                    </Protected>
+                </Route>
+                <Route exact path="/reactions">
+                    <Protected>
+                        <ReactionProvider>
+                            <ReactionList />
+                        </ReactionProvider>
+                    </Protected>
+                </Route>
+                <Route exact path="/posts">
+                    <Protected>
+                        <PostProvider>
+                            <PostList />
+                        </PostProvider>
+                    </Protected>
+                </Route>
+                <Route exact path="/posts/my-posts">
+                    <Protected>
+                        <PostProvider>
+                            <PostList />
+                        </PostProvider>
+                    </Protected>
+                </Route>
+                <Route exact path="/posts/unapproved-posts">
+                    <Protected>
+                        <PostProvider>
+                            <PostList />
+                        </PostProvider>
+                    </Protected>
+                </Route>
+                <Route exact path="/posts/create">
+                    <Protected>
+                        <PostProvider>
+                            <CategoryProvider>
+                                <TagProvider>
+                                    <PostForm />
+                                </TagProvider>
+                            </CategoryProvider>
+                        </PostProvider>
+                    </Protected>
+                </Route>
+                <Route exact path="/posts/detail/:postId(\d+)">
+                    <Protected>
+                        <ReactionProvider>
+                            <PostProvider>
+                                <CommentProvider>
+                                    <PostDetail />
+                                </CommentProvider>
+                            </PostProvider>
+                        </ReactionProvider>
+                    </Protected>
+                </Route>
                 <Route exact path="/users">
-                    <UserList/>
+                    <Protected>
+                        <UserList />
+                    </Protected>
                 </Route>
                 <Route exact path="/users/detail/:userId(\d+)">
-                    <UserDetail/>
+                    <Protected>
+                        <UserDetail />
+                    </Protected>
                 </Route>
             </UserProvider>
-
         </main>
     </>
 }

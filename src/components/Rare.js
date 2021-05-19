@@ -13,8 +13,8 @@ export const Rare = () => (
                 return <>
                     <UserProvider>
                         <NavBar />
+                        <ApplicationViews />
                     </UserProvider>
-                    <ApplicationViews />
                 </>
             } else {
                 return <Redirect to="/login" />
