@@ -3,11 +3,11 @@ import { useHistory } from "react-router-dom"
 import { Card, Button, CardBody, CardTitle, CardText } from "reactstrap"
 import { UserContext } from "./UserProvider"
 
-export const UserList = () => {
-    const {rareUsers, getAllUsers} = useContext(UserContext)
+export const InactiveUserList = () => {
+    const {rareUsers, getInactiveUsers} = useContext(UserContext)
     const history = useHistory()
     useEffect(()=>{
-        getAllUsers()
+        getInactiveUsers()
     },[])
     return(
         <>
