@@ -24,7 +24,7 @@ export const Register = (props) => {
                 "email": email.current.value,
                 "password": password.current.value,
                 "bio": bio.current.value,
-                "profile_image_url": "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png",
+                "profile_image_url": "",
             }
 
             return fetch("http://127.0.0.1:8000/register", {
