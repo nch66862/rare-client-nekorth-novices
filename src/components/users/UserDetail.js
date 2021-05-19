@@ -57,9 +57,9 @@ export const UserDetail = () => {
                 subscriber count: {rareUser.subscribers}<br></br>
                 subscribed: {String(subscribed)}
                     </CardText>
-                    <Button onClick={handleSubscribeClicked}>{subscribed ? "Unsubcribe" : "Subscribe"}</Button>
                     {localStorage.getItem("rare_user_admin") === "true" && !rareUser.user?.is_active ? <Button onClick={handleActivate}>Activate</Button> :
                     localStorage.getItem("rare_user_admin") === "true" && rareUser.user?.is_active && <Button onClick={handleDeactivate}>Deactivate</Button>}
+                    {rareUser.user?.is_active && <Button onClick={handleSubscribeClicked}>{subscribed ? "Unsubcribe" : "Subscribe"}</Button>}
                 </CardBody>
             </Card>
         </>
