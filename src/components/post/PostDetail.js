@@ -67,11 +67,12 @@ export const PostDetail = () => {
       <Card>
         <CardBody>
           <CardTitle className="text-center">{post.title}</CardTitle>
-          <CardSubtitle className="text-center">{post.user.user?.username} | {post.publication_date}</CardSubtitle>
+          <CardSubtitle className="text-center">Category: {post.category?.label}</CardSubtitle>
+          <CardSubtitle className="text-center">Author: {post.user.user?.username} | Date: {post.publication_date}</CardSubtitle>
           <CardSubtitle className="text-center">Tags: {post.tag_set?.map(tag => {
             return tag.label
           }).join(", ")}</CardSubtitle>
-          <CardText>{post.content}</CardText>
+          <CardText className="text-center">{post.content}</CardText>
         </CardBody>
         {/* <div className="reactions">
         <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
@@ -94,7 +95,7 @@ export const PostDetail = () => {
           })}
         </div> */}
       </Card>
-      <CommentForm postId={postId} />
+      <CommentForm postId={postId} setPost={setPost}/>
       {post.comment_set.map(comment => {
         return (
           <ListGroup key={comment.id} >

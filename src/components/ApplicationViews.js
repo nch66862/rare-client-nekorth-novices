@@ -76,6 +76,17 @@ export const ApplicationViews = () => {
                         </PostProvider>
                     </Protected>
                 </Route>
+                <Route exact path="/posts/edit/:postId(\d+)">
+                    <Protected>
+                        <PostProvider>
+                            <CategoryProvider>
+                                <TagProvider>
+                                    <PostForm />
+                                </TagProvider>
+                            </CategoryProvider>
+                        </PostProvider>
+                    </Protected>
+                </Route>
                 <Route exact path="/posts/detail/:postId(\d+)">
                     <Protected>
                         <ReactionProvider>
