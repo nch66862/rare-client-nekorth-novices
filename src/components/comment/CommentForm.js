@@ -2,9 +2,11 @@ import React, { useContext, useEffect } from "react"
 import { CommentContext } from "./CommentProvider"
 import {Button} from "reactstrap"
 import "./CommentForm.css"
+import { PostContext } from "../post/PostProvider"
 
 export const CommentForm = (props) => {
   const {createComment, newComment, setNewComment, editComment} = useContext(CommentContext)
+  const {getPostById} = useContext(PostContext)
   const handleControlledInputChange = (event) => {
     let comment = {...newComment}
     comment[event.target.id] = event.target.value
@@ -12,9 +14,9 @@ export const CommentForm = (props) => {
   }
   const handleSubmitClick = (event) => {
     if(newComment.id){
-      editComment(newComment)
+      editComment(newComment).then(()=>getPostById(props.postId)).then((res)=>{console.log(res)})
     } else{
-      createComment(newComment)
+      createComment(newComment).then(()=>getPostById(props.postId)).then((res)=>{props.setPost(res)})
     }
     setNewComment({
       "content": "",

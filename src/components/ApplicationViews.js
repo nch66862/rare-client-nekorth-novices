@@ -76,7 +76,7 @@ export const ApplicationViews = () => {
                         </PostProvider>
                     </Protected>
                 </Route>
-                <Route exact path="/games/edit/:gameId(\d+)">
+                <Route exact path="/posts/edit/:postId(\d+)">
                     <Protected>
                         <PostProvider>
                             <CategoryProvider>

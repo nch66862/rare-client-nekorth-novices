@@ -1,15 +1,16 @@
 import React, { useContext, useEffect, useState } from "react"
-import { useHistory } from "react-router"
+import { useHistory, useParams } from "react-router"
 import { Button, Form, FormGroup, Label, Input, ListGroup, ListGroupItem } from 'reactstrap'
 import { CategoryContext } from "../categories/CategoryProvider"
 import { TagContext } from "../tags/TagProvider"
 import { PostContext } from "./PostProvider"
 
 export const PostForm = (props) => {
-    const { createPost } = useContext(PostContext)
+    const { createPost, getPostById, editPost } = useContext(PostContext)
     const { getAllCategories, categories } = useContext(CategoryContext)
     const { getAllTags, tags } = useContext(TagContext)
     const history = useHistory()
+    const {postId} = useParams()
     const [post, setPost] = useState({
         "category_id": 0,
         "title": "",
@@ -18,8 +19,22 @@ export const PostForm = (props) => {
     })
 
     useEffect(() => {
+        
         getAllCategories()
-            .then(getAllTags)
+            .then(getAllTags).then(()=>{
+                if(postId){
+                    console.log(postId)
+                    getPostById(postId)
+                    .then(res => {
+                        console.log(res)
+                        let tags = res.tag_set.map(tag => tag.id)
+                        setPost({
+                          "category_id": res.category?.id,
+                          "title": res.title,
+                          "content": res.content,
+                          "tag_ids": tags})})
+                }
+            })
     }, [])
 
     const handleControlledInputChange = (event) => {
@@ -45,8 +60,13 @@ export const PostForm = (props) => {
     }
 
     const handleSubmitClick = (event) => {
-        createPost(post)
-            .then(result => history.push(`/posts/detail/${result.id}`))
+        if(postId){
+            editPost(post, postId)
+            .then(result => history.push(`/posts/detail/${postId}`))
+        }else{
+            createPost(post)
+                .then(result => history.push(`/posts/detail/${result.id}`))
+        }
     }
 
     return (
@@ -56,11 +76,11 @@ export const PostForm = (props) => {
             <fieldset>
                 <FormGroup>
                     <Label for="postTitle">Title</Label>
-                    <Input onChange={handleControlledInputChange} type="text" name="title" id="title" />
+                    <Input onChange={handleControlledInputChange} type="text" name="title" id="title" value={post.title} />
                 </FormGroup>
                 <FormGroup>
                     <Label for="postCategory">Category</Label>
-                    <Input onChange={handleControlledInputChange} type="select" name="selectCategory" id="category_id">
+                    <Input onChange={handleControlledInputChange} type="select" name="selectCategory" id="category_id" value={post.category_id}>
                         <option value="0">choose a category...</option>
                         {categories?.map(category => {
                             return <option key={category?.id} value={category?.id}>{category?.label}</option>
@@ -69,7 +89,7 @@ export const PostForm = (props) => {
                 </FormGroup>
                 <FormGroup>
                     <Label for="postContent">Your Thoughts</Label>
-                    <Input onChange={handleControlledInputChange} type="textarea" name="text" id="content" />
+                    <Input onChange={handleControlledInputChange} type="textarea" name="text" id="content" value={post.content}/>
                 </FormGroup>
                 <FormGroup>
                     <ListGroup horizontal>
