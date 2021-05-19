@@ -18,7 +18,6 @@ export const ReactionList = () => {
   useEffect(() => {
     let reactionCopy = {...reaction}
     reactionCopy.image_url = b64
-    console.log("updated")
     setReaction(reactionCopy)
   }, [b64])
   
@@ -42,7 +41,6 @@ export const ReactionList = () => {
     tempReaction[event.target.id] = event.target.value
     setReaction(tempReaction)
   }
-  console.log(reaction)
   return(
     <>
     <h3>Reactions</h3>

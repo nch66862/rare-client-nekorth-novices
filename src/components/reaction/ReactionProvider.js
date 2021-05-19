@@ -39,10 +39,11 @@ export const ReactionProvider = props => {
             body: JSON.stringify(reaction)
         })
             .then(response => response.json())
+            .then(getReactions)
     }
 
     return (
-        <ReactionContext.Provider value={{ createReactionImageString, b64, createReaction, getReactions, setB64 }} >
+        <ReactionContext.Provider value={{ createReactionImageString, b64, createReaction, getReactions, setB64, reactions }} >
             { props.children }
         </ReactionContext.Provider>
     )
