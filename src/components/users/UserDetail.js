@@ -39,9 +39,7 @@ export const UserDetail = () => {
             unsubscribe(subscription).then(setSubscribed(false))
         }else{
             let subscription = {
-                "follower_id" : parseInt(localStorage.getItem("rare_user_id")),
                 "author_id" : user.id,
-                "created_on" : HumanDate(),
                 "ended_on" : ""
             }
             subscribe(subscription).then(setSubscribed(true))
