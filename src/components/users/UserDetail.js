@@ -51,7 +51,7 @@ export const UserDetail = () => {
     return (
         <>
             <Card>
-                <CardImg top width="100%" src={rareUser.profile_image} alt="Card image cap" />
+                <CardImg top width="100%" src={rareUser.profile_image ? rareUser.profile_image : "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"} alt="Card image cap" />
                 <CardBody>
                     <CardTitle tag="h4">@{rareUser.user?.username}</CardTitle>
                     <CardSubtitle tag="h5" className="mb-2 text-muted">{rareUser.user?.first_name} {rareUser.user?.last_name}</CardSubtitle>
