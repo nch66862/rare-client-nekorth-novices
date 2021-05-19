@@ -12,6 +12,14 @@ export const PostProvider = (props) => {
     })
     .then(res => res.json())
   }
+  const searchPosts = (search) => {
+    return fetch(`http://localhost:8000/posts?q=${search}`,{
+        headers:{
+            "Authorization": `Token ${localStorage.getItem("lu_token")}`
+        }
+    })
+    .then(res=> res.json())
+  }
 
   const getPostById = (id) => {
     return fetch(`http://localhost:8000/posts/${id}`,{
@@ -53,10 +61,17 @@ export const PostProvider = (props) => {
       body: JSON.stringify({})
     })
   }
+  const sortPosts = (sort) => {
+    return fetch(`http://localhost:8000/posts?category=${sort}`,{
+      headers: {
+        "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
+      }
+    }).then(res=>res.json())
+  }
 
   return (
     <PostContext.Provider value={{
-      getPostById, createPost, getAllPosts, getPostsByUserId, approvePost
+      getPostById, createPost, getAllPosts, getPostsByUserId, approvePost, searchPosts, sortPosts
     }}>
       {props.children}
     </PostContext.Provider>
