@@ -29,7 +29,7 @@ export const PostForm = (props) => {
                         console.log(res)
                         let tags = res.tag_set.map(tag => tag.id)
                         setPost({
-                          "category_id": res.category?.id,
+                          "category_id": res.category ? res.category.id:0,
                           "title": res.title,
                           "content": res.content,
                           "tag_ids": tags})})
