@@ -9,9 +9,6 @@ export const UserDetail = () => {
     const { userId } = useParams()
     const [subscribed, setSubscribed] = useState(false)
     useEffect(() => {
-        checkAdmin()
-    }, [])
-    useEffect(() => {
         getUserById(userId).then(setRareUser)
     }, [subscribed])
     useEffect(() => {
@@ -19,14 +16,11 @@ export const UserDetail = () => {
             checkSubscribed(parseInt(rareUser.id)).then(res => setSubscribed(res.subscribed))
         }
     }, [rareUser])
-    const handlePromotionClicked = () => {
-        let action
-        if (rareUser.active) {
-            action = "deactivate"
-        } else {
-            action = "activate"
-        }
-        changeAuthorStatus(rareUser.id, action).then(res => getUserById(rareUser.id)).then(setRareUser)
+    const handleActivate = () => {
+        changeAuthorStatus(rareUser.id, "activate").then(res => getUserById(rareUser.id)).then(setRareUser)
+    }
+    const handleDeactivate = () => {
+        changeAuthorStatus(rareUser.id, "deactivate").then(res => getUserById(rareUser.id)).then(setRareUser)
     }
     const handleSubscribeClicked = () => {
         let subscription = {
@@ -54,8 +48,9 @@ export const UserDetail = () => {
                             subscriber count: {rareUser.subscribers}<br></br>
                             subscribed: {String(subscribed)}
                     </CardText>
-                    <Button onClick={handleSubscribeClicked}>{subscribed ? "Unsubcribe" : "Subscribe"}</Button>
-                    {admin ? <Button onClick={handlePromotionClicked}>{rareUser.user?.is_active ? "Deactivate" : "Activate"}</Button> : <></>}
+                    {localStorage.getItem("rare_user_admin") === "true" && !rareUser.user?.is_active ? <Button onClick={handleActivate}>Activate</Button> :
+                    localStorage.getItem("rare_user_admin") === "true" && rareUser.user?.is_active && <Button onClick={handleDeactivate}>Deactivate</Button>}
+                    {rareUser.user?.is_active && <Button onClick={handleSubscribeClicked}>{subscribed ? "Unsubcribe" : "Subscribe"}</Button>}
                 </CardBody>
             </Card>
         </>
