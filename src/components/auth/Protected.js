@@ -9,7 +9,7 @@ export const Protected = (props) => {
     useEffect(() => {
         checkAuthenticated()
             .then(res => {
-                if (res.valid){
+                if (res.is_active){
                     if (res.is_admin) {
                         localStorage.setItem("rare_user_admin", "true")
                     }
