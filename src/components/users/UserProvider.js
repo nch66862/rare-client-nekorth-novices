@@ -29,33 +29,23 @@ export const UserProvider = (props) => {
     //     .then(res => res.json())
     //     .then(res => console.log("subcriptions: ",res))
     // }
-    const checkSubscribed = (followerId, authorId) => {
-        return fetch("http://localhost:8000/subscribed", {
+    const checkSubscribed = (authorId) => {
+        return fetch("http://localhost:8000/users/subscription_status", {
             method: "POST",
             headers:{
                 "Content-Type":"application/json",
                 "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
             },
             body: JSON.stringify({
-                "follower_id": parseInt(followerId),
                 "author_id": authorId
             })
         })
             .then(res => res.json())
     }
-    const subscribe = (subscription) => {
-        return fetch("http://localhost:8000/subscriptions",{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json",
-                "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
-            },
-            body: JSON.stringify(subscription)
-        })
-    }
-    const unsubscribe = (subscription) => {
-        return fetch("http://localhost:8000/unsubscribe",{
-            method:"PATCH",
+    const changeSubscribed = (subscribing, subscription) => {
+        return fetch("http://localhost:8000/users/subscription",{
+            method: subscribing ? "POST" : "DELETE",
+            // method:"POST",
             headers:{
                 "Content-Type":"application/json",
                 "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
@@ -95,7 +85,7 @@ export const UserProvider = (props) => {
         })
     }
     return (
-        <UserContext.Provider value={{ getAllUsers, rareUsers, getUserById, subscribe, checkSubscribed, unsubscribe, checkAdmin, admin, changeAuthorStatus, checkAuthenticated }}>
+        <UserContext.Provider value={{ getAllUsers, rareUsers, getUserById, changeSubscribed, checkSubscribed, checkAdmin, admin, changeAuthorStatus, checkAuthenticated }}>
             {props.children}
         </UserContext.Provider>
     )

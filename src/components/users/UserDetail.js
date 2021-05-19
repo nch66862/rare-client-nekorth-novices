@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import { Button, Card, CardBody, CardImg, CardSubtitle, CardText, CardTitle } from "reactstrap";
-import { HumanDate } from "../utils/HumanDate";
 import { UserContext } from "./UserProvider";
 
 export const UserDetail = () => {
-    const { getUserById, subscribe, checkSubscribed, unsubscribe, checkAdmin, admin, changeAuthorStatus } = useContext(UserContext)
+    const { getUserById, changeSubscribed, checkSubscribed, checkAdmin, admin, changeAuthorStatus } = useContext(UserContext)
     const [rareUser, setRareUser] = useState({})
     const { userId } = useParams()
     const [subscribed, setSubscribed] = useState(false)
@@ -17,7 +16,7 @@ export const UserDetail = () => {
     }, [subscribed])
     useEffect(() => {
         if (userId && rareUser.id) {
-            checkSubscribed(parseInt(localStorage.getItem("rare_user_id")), rareUser.id).then(res => setSubscribed(res.subscribed))
+            checkSubscribed(parseInt(rareUser.id)).then(res => setSubscribed(res.subscribed))
         }
     }, [rareUser])
     const handlePromotionClicked = () => {
@@ -30,19 +29,13 @@ export const UserDetail = () => {
         changeAuthorStatus(rareUser.id, action).then(res => getUserById(rareUser.id)).then(setRareUser)
     }
     const handleSubscribeClicked = () => {
+        let subscription = {
+            "author_id": rareUser.id,
+        }
         if (subscribed) {
-            let subscription = {
-                "follower_id": parseInt(localStorage.getItem("rare_user_id")),
-                "author_id": rareUser.id,
-                "ended_on": HumanDate()
-            }
-            unsubscribe(subscription).then(setSubscribed(false))
+            changeSubscribed(false, subscription).then(setSubscribed(false))
         } else {
-            let subscription = {
-                "author_id" : rareUser.id,
-                "ended_on" : ""
-            }
-            subscribe(subscription).then(setSubscribed(true))
+            changeSubscribed(true, subscription).then(setSubscribed(true))
         }
 
     }
@@ -55,11 +48,11 @@ export const UserDetail = () => {
                     <CardSubtitle tag="h5" className="mb-2 text-muted">{rareUser.user?.first_name} {rareUser.user?.last_name}</CardSubtitle>
                     <CardText>
                         {rareUser.user?.email} <br></br>
-                admin: {String(rareUser.user?.is_staff)}<br></br>
-                active: {String(rareUser.user?.is_active)}<br></br>
-                Created On : {new Date(rareUser.created_on).toLocaleDateString("en-us")}<br></br>
-                subscriber count: {rareUser.subscribers}<br></br>
-                subscribed: {String(subscribed)}
+                            admin: {String(rareUser.user?.is_staff)}<br></br>
+                            active: {String(rareUser.user?.is_active)}<br></br>
+                            Created On : {new Date(rareUser.created_on).toLocaleDateString("en-us")}<br></br>
+                            subscriber count: {rareUser.subscribers}<br></br>
+                            subscribed: {String(subscribed)}
                     </CardText>
                     <Button onClick={handleSubscribeClicked}>{subscribed ? "Unsubcribe" : "Subscribe"}</Button>
                     {admin ? <Button onClick={handlePromotionClicked}>{rareUser.user?.is_active ? "Deactivate" : "Activate"}</Button> : <></>}
