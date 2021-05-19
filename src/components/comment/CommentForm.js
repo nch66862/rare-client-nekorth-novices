@@ -14,7 +14,7 @@ export const CommentForm = (props) => {
   }
   const handleSubmitClick = (event) => {
     if(newComment.id){
-      editComment(newComment).then(()=>getPostById(props.postId)).then((res)=>{console.log(res)})
+      editComment(newComment).then(()=>getPostById(props.postId)).then((res)=>{props.setPost(res)})
     } else{
       createComment(newComment).then(()=>getPostById(props.postId)).then((res)=>{props.setPost(res)})
     }

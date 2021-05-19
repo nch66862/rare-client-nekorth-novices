@@ -39,7 +39,6 @@ export const PostList = () => {
 
   return (
     <section>
-      {console.log(posts)}
       <ListGroup>
         {posts?.map(post => {
           return (<ListGroupItem key={post.id}>
