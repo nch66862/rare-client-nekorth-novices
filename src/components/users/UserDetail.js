@@ -5,68 +5,68 @@ import { HumanDate } from "../utils/HumanDate";
 import { UserContext } from "./UserProvider";
 
 export const UserDetail = () => {
-    const {getUserById, subscribe, checkSubscribed, unsubscribe,checkAdmin, admin, changeAuthorStatus} = useContext(UserContext)
-    const [user, setUser] = useState({})
-    const {userId} = useParams()
+    const { getUserById, subscribe, checkSubscribed, unsubscribe, checkAdmin, admin, changeAuthorStatus } = useContext(UserContext)
+    const [rareUser, setRareUser] = useState({})
+    const { userId } = useParams()
     const [subscribed, setSubscribed] = useState(false)
-    useEffect(()=>{
+    useEffect(() => {
         checkAdmin()
-    },[])
-    useEffect(()=>{
-        getUserById(userId).then(setUser)
-    },[subscribed])
-    useEffect(()=>{
-        if(userId && user.id){
-            checkSubscribed(parseInt(localStorage.getItem("rare_user_id")),user.id).then(res=> setSubscribed(res.subscribed))
+    }, [])
+    useEffect(() => {
+        getUserById(userId).then(setRareUser)
+    }, [subscribed])
+    useEffect(() => {
+        if (userId && rareUser.id) {
+            checkSubscribed(parseInt(localStorage.getItem("rare_user_id")), rareUser.id).then(res => setSubscribed(res.subscribed))
         }
-    },[user])
+    }, [rareUser])
     const handlePromotionClicked = () => {
         let action
-        if(user.active){
+        if (rareUser.active) {
             action = "deactivate"
-        }else{
+        } else {
             action = "activate"
         }
-        changeAuthorStatus(user.id, action).then(res=>getUserById(user.id)).then(setUser)
+        changeAuthorStatus(rareUser.id, action).then(res => getUserById(rareUser.id)).then(setRareUser)
     }
     const handleSubscribeClicked = () => {
-        if(subscribed){
+        if (subscribed) {
             let subscription = {
-                "follower_id" : parseInt(localStorage.getItem("rare_user_id")),
-                "author_id" : user.id,
-                "ended_on" : HumanDate()
+                "follower_id": parseInt(localStorage.getItem("rare_user_id")),
+                "author_id": rareUser.id,
+                "ended_on": HumanDate()
             }
             unsubscribe(subscription).then(setSubscribed(false))
-        }else{
+        } else {
             let subscription = {
-                "follower_id" : parseInt(localStorage.getItem("rare_user_id")),
-                "author_id" : user.id,
-                "created_on" : HumanDate(),
-                "ended_on" : ""
+                "follower_id": parseInt(localStorage.getItem("rare_user_id")),
+                "author_id": rareUser.id,
+                "created_on": HumanDate(),
+                "ended_on": ""
             }
             subscribe(subscription).then(setSubscribed(true))
         }
-            
+
     }
-    return(
+    return (
         <>
-        <Card>
-        <CardImg top width = "100%" src={user.profileImageUrl} alt="Card image cap" />
-        <CardBody>
-          <CardTitle tag="h4">{user.displayName}</CardTitle>
-          <CardSubtitle tag="h5" className="mb-2 text-muted">{user.fullName}</CardSubtitle>
-          <CardText>
-                {user.email} <br></br>
-                admin: {String(user.isAdmin)}, <br></br>
-                active: {String(user.active)}, <br></br>
-                Created On : {user.createdOn} <br></br>
-                subscriber count: {user.subscribers} <br></br>
+            <Card>
+                <CardImg top width="100%" src={rareUser.profile_image ? rareUser.profile_image : "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"} alt="Card image cap" />
+                <CardBody>
+                    <CardTitle tag="h4">@{rareUser.user?.username}</CardTitle>
+                    <CardSubtitle tag="h5" className="mb-2 text-muted">{rareUser.user?.first_name} {rareUser.user?.last_name}</CardSubtitle>
+                    <CardText>
+                        {rareUser.user?.email} <br></br>
+                admin: {String(rareUser.user?.is_staff)}<br></br>
+                active: {String(rareUser.user?.is_active)}<br></br>
+                Created On : {new Date(rareUser.created_on).toLocaleDateString("en-us")}<br></br>
+                subscriber count: {rareUser.subscribers}<br></br>
                 subscribed: {String(subscribed)}
-            </CardText>
-          <Button onClick={handleSubscribeClicked}>{subscribed ? "Unsubcribe" : "Subscribe"}</Button>
-          {admin ? <Button onClick={handlePromotionClicked}>{user.active ? "Deactivate": "Activate"}</Button> :<></>}
-        </CardBody>
-      </Card>
+                    </CardText>
+                    <Button onClick={handleSubscribeClicked}>{subscribed ? "Unsubcribe" : "Subscribe"}</Button>
+                    {admin ? <Button onClick={handlePromotionClicked}>{rareUser.user?.is_active ? "Deactivate" : "Activate"}</Button> : <></>}
+                </CardBody>
+            </Card>
         </>
     )
 }
