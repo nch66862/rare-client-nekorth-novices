@@ -6,18 +6,15 @@ import { PostContext } from "./PostProvider";
 export const PostList = () => {
   const [posts, setPosts] = useState([])
   const [gotApproval, setGotApproval] = useState(false)
-  const { getPostsByUserId, getAllPosts, approvePost } = useContext(PostContext)
+  const { getPostsByUserId, getAllPosts, approvePost, deletePost } = useContext(PostContext)
   const history = useHistory()
   const urlPath = history.location.pathname
-
-  useEffect(() => {
+  const checkPath = () => {
     if (urlPath === "/posts/my-posts") {
-      console.log("myposts, ")
       getPostsByUserId()
         .then(setPosts)
     }
     else if (urlPath === "/posts") {
-      console.log("allposts")
       getAllPosts()
         .then(setPosts)
     }
@@ -27,6 +24,9 @@ export const PostList = () => {
           
         })
     }
+  }
+  useEffect(() => {
+    checkPath()
   }, [])
 
   const handleApprovePost = (postId) => {
@@ -39,6 +39,7 @@ export const PostList = () => {
 
   return (
     <section>
+      {console.log(posts)}
       <ListGroup>
         {posts?.map(post => {
           return (<ListGroupItem key={post.id}>
@@ -52,6 +53,12 @@ export const PostList = () => {
             <Link to={`/posts/detail/${post.id}`}>
               Post Details
             </Link>
+            {post.ownership ? <> <Link to={`/posts/edit/${post.id}`}>
+              Edit
+            </Link>
+            <Button color="danger" onClick={e=> {
+              e.preventDefault()
+              deletePost(post.id).then(()=>checkPath())} }>delete</Button></>:<></>}
             <ListGroupItemText>
               {urlPath === "/posts/unapproved-posts" && <Button onClick={() => handleApprovePost(post.id)}>Approve</Button>}
             </ListGroupItemText>

@@ -53,10 +53,19 @@ export const PostProvider = (props) => {
       body: JSON.stringify({})
     })
   }
+  const deletePost = (postId) => {
+    return fetch(`http://localhost:8000/posts/${postId}`,{
+      method:"DELETE",
+      headers:{
+        "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
+      }
+    })
+    .then()
+  }
 
   return (
     <PostContext.Provider value={{
-      getPostById, createPost, getAllPosts, getPostsByUserId, approvePost
+      getPostById, createPost, getAllPosts, getPostsByUserId, approvePost, deletePost
     }}>
       {props.children}
     </PostContext.Provider>
