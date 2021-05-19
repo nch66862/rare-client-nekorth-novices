@@ -5,11 +5,12 @@ import Logo from "./image.png"
 import { UserContext } from "../users/UserProvider"
 
 export const NavBar = () => {
-    const {admin, checkAdmin} = useContext(UserContext)
+    // const {admin, checkAdmin} = useContext(UserContext)
+    const admin = true
     const history = useHistory()
-    useEffect(() => {
-        
-    }, [])
+    // useEffect(() => {
+    //     checkAdmin()
+    // }, [])
 
     return (
         <ul className="navbar">

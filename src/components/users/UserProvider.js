@@ -1,10 +1,12 @@
 import React, { createContext, useState } from "react";
+import { Redirect, useHistory } from "react-router-dom"
 
 export const UserContext = createContext()
 
 export const UserProvider = (props) => {
-    const [users, setUsers] = useState([])
+    const [rareUsers, setUsers] = useState([])
     const [admin, setAdmin] = useState(false)
+    const history = useHistory()
     const getAllUsers = () => {
         return fetch("http://localhost:8000/users",{
             headers:{
@@ -28,18 +30,18 @@ export const UserProvider = (props) => {
     //     .then(res => console.log("subcriptions: ",res))
     // }
     const checkSubscribed = (followerId, authorId) => {
-        return fetch("http://localhost:8000/subscribed",{
+        return fetch("http://localhost:8000/subscribed", {
             method: "POST",
             headers:{
                 "Content-Type":"application/json",
                 "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
             },
             body: JSON.stringify({
-                "follower_id" : parseInt(followerId),
-                "author_id" : authorId
+                "follower_id": parseInt(followerId),
+                "author_id": authorId
             })
         })
-        .then(res => res.json())
+            .then(res => res.json())
     }
     const subscribe = (subscription) => {
         return fetch("http://localhost:8000/subscriptions",{
@@ -62,13 +64,21 @@ export const UserProvider = (props) => {
         })
     }
     const checkAdmin = () => {
-        return fetch(`http://localhost:8000/users/${localStorage.getItem("rare_user_id")}`,{
-            headers:{
+        return fetch(`http://localhost:8000/users/${localStorage.getItem("rare_user_id")}`)
+            .then(res => res.json())
+            .then(res => setAdmin(res.isAdmin))
+    }
+    const checkAuthenticated = () => {
+        return fetch(`http://localhost:8000/check-active`, {
+            headers: {
+                "Content-Type": "application/json",
                 "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
             }
         })
-        .then(res => res.json())
-        .then(res => setAdmin(res.isAdmin))
+            .then(res => res.json())
+            .then(res => {
+                return res.valid
+            })
     }
     const changeAuthorStatus = (userId, action) => {
         return fetch(`http://localhost:8000/active_status`,{
@@ -77,14 +87,16 @@ export const UserProvider = (props) => {
                 "Content-Type":"application/json",
                 "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
             },
-            body: JSON.stringify({"action": action,
-                                    "user_id": userId,
-                                    "approver_one_id": parseInt(localStorage.getItem("rare_user_id"))})
+            body: JSON.stringify({
+                "action": action,
+                "user_id": userId,
+                "approver_one_id": parseInt(localStorage.getItem("rare_user_id"))
+            })
         })
     }
     return (
-        <UserContext.Provider value={{getAllUsers, users, getUserById, subscribe, checkSubscribed, unsubscribe, checkAdmin, admin, changeAuthorStatus}}>
+        <UserContext.Provider value={{ getAllUsers, rareUsers, getUserById, subscribe, checkSubscribed, unsubscribe, checkAdmin, admin, changeAuthorStatus, checkAuthenticated }}>
             {props.children}
         </UserContext.Provider>
-        )
-} 
+    )
+}
