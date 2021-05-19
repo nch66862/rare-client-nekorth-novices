@@ -5,7 +5,6 @@ export const UserContext = createContext()
 
 export const UserProvider = (props) => {
     const [rareUsers, setUsers] = useState([])
-    const [admin, setAdmin] = useState(false)
     const history = useHistory()
     const getAllUsers = () => {
         return fetch("http://localhost:8000/users",{
@@ -63,11 +62,6 @@ export const UserProvider = (props) => {
             body: JSON.stringify(subscription)
         })
     }
-    const checkAdmin = () => {
-        return fetch(`http://localhost:8000/users/${localStorage.getItem("rare_user_id")}`)
-            .then(res => res.json())
-            .then(res => setAdmin(res.isAdmin))
-    }
     const checkAuthenticated = () => {
         return fetch(`http://localhost:8000/check-active`, {
             headers: {
@@ -81,7 +75,7 @@ export const UserProvider = (props) => {
             })
     }
     const changeAuthorStatus = (userId, action) => {
-        return fetch(`http://localhost:8000/active_status`,{
+        return fetch(`http://localhost:8000/change-active`,{
             method:"PUT",
             headers:{
                 "Content-Type":"application/json",
@@ -95,7 +89,7 @@ export const UserProvider = (props) => {
         })
     }
     return (
-        <UserContext.Provider value={{ getAllUsers, rareUsers, getUserById, subscribe, checkSubscribed, unsubscribe, checkAdmin, admin, changeAuthorStatus, checkAuthenticated }}>
+        <UserContext.Provider value={{ getAllUsers, rareUsers, getUserById, subscribe, checkSubscribed, unsubscribe, changeAuthorStatus, checkAuthenticated }}>
             {props.children}
         </UserContext.Provider>
     )
