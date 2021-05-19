@@ -15,21 +15,20 @@ import {
 
 export const PostDetail = () => {
   const {getPostById} = useContext(PostContext)
-  const {comments} = useContext(CommentContext)
   const {getReactions, reactions} = useContext(ReactionContext)
 
   const [post, setPost] = useState({
     'id': 0,
-    'userId': 0,
-    'categoryId': 0,
+    'category': 0,
     'title': "",
-    'publicationDate': "",
+    'user':{},
+    'publication_date': "",
     'imageUrl': "",
     'content': "",
     'approved': false,
-    'tags': [],
-    'comments': [],
-    'reactions': []
+    'tag_set': [],
+    'comment_set': [],
+    'reaction_set': []
   })
 
   const [dropdownOpen, setDropdownOpen] = useState(false)
@@ -57,31 +56,30 @@ export const PostDetail = () => {
       
     }
   }
-
+//need to get reactions
   useEffect(() => {
     getPostById(parseInt(postId))
     .then(setPost)
-    .then(getReactions)
-  }, [comments])
+  }, [])
 
   return (
     <>
       <Card>
         <CardBody>
           <CardTitle className="text-center">{post.title}</CardTitle>
-          <CardSubtitle className="text-center">{post.user?.fullName} | {post.publicationDate}</CardSubtitle>
-          <CardSubtitle className="text-center">Tags: {post.tags?.map(tag => {
+          <CardSubtitle className="text-center">{post.user.user?.username} | {post.publication_date}</CardSubtitle>
+          <CardSubtitle className="text-center">Tags: {post.tag_set?.map(tag => {
             return tag.label
           }).join(", ")}</CardSubtitle>
           <CardText>{post.content}</CardText>
         </CardBody>
-        <div className="reactions">
+        {/* <div className="reactions">
         <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
           <DropdownToggle caret>
             Reactions
           </DropdownToggle>
           <DropdownMenu>
-          {reactions.map(reaction => {
+          {reactions?.map(reaction => {
             return <DropdownItem key={reaction.id} id={reaction.id} onClick={event => handleReactionInput(event)}><img src={reaction.image_url} alt={reaction.label} style={{pointerEvents:"none"}} width="20vh" height="20vh" />{reaction.label}</DropdownItem>
           })}
           </DropdownMenu>
@@ -94,10 +92,10 @@ export const PostDetail = () => {
               </div>
             )
           })}
-        </div>
+        </div> */}
       </Card>
       <CommentForm postId={postId} />
-      {post.comments.map(comment => {
+      {post.comment_set.map(comment => {
         return (
           <ListGroup key={comment.id} >
             <CommentCard comment={comment} />

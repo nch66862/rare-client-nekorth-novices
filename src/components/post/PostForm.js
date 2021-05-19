@@ -10,17 +10,10 @@ export const PostForm = (props) => {
     const { getAllCategories, categories } = useContext(CategoryContext)
     const { getAllTags, tags } = useContext(TagContext)
     const history = useHistory()
-    const currentUser = parseInt(localStorage.getItem("rare_user_id"))
-    const today = new Date()
-    const currentDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
     const [post, setPost] = useState({
-        "user_id": currentUser,
         "category_id": 0,
         "title": "",
-        "publication_date": currentDate,
-        "image_url": "",
         "content": "",
-        "approved": false,
         "tag_ids": []
     })
 
@@ -58,7 +51,7 @@ export const PostForm = (props) => {
 
     return (
         <Form className="postForm" autoComplete="on">
-            {console.log(categories)}
+            {console.log(post)}
             <h2 className="postForm__title">New Post</h2>
             <fieldset>
                 <FormGroup>
@@ -77,10 +70,6 @@ export const PostForm = (props) => {
                 <FormGroup>
                     <Label for="postContent">Your Thoughts</Label>
                     <Input onChange={handleControlledInputChange} type="textarea" name="text" id="content" />
-                </FormGroup>
-                <FormGroup>
-                    <Label for="postImageURL">URL for an Image</Label>
-                    <Input onChange={handleControlledInputChange} type="text" name="imageURL" id="image_url" />
                 </FormGroup>
                 <FormGroup>
                     <ListGroup horizontal>
