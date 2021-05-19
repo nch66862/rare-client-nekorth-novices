@@ -1,13 +1,20 @@
 import React, { createContext, useState } from "react";
-import { Redirect, useHistory } from "react-router-dom"
 
 export const UserContext = createContext()
 
 export const UserProvider = (props) => {
     const [rareUsers, setUsers] = useState([])
-    const history = useHistory()
     const getAllUsers = () => {
         return fetch("http://localhost:8000/users",{
+            headers:{
+                "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
+            }
+        })
+        .then(res => res.json())
+        .then(setUsers)
+    }
+    const getInactiveUsers = () => {
+        return fetch("http://localhost:8000/users/inactive",{
             headers:{
                 "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
             }
@@ -89,7 +96,7 @@ export const UserProvider = (props) => {
         })
     }
     return (
-        <UserContext.Provider value={{ getAllUsers, rareUsers, getUserById, subscribe, checkSubscribed, unsubscribe, changeAuthorStatus, checkAuthenticated }}>
+        <UserContext.Provider value={{ getAllUsers, rareUsers, getUserById, subscribe, checkSubscribed, unsubscribe, changeAuthorStatus, checkAuthenticated, getInactiveUsers }}>
             {props.children}
         </UserContext.Provider>
     )
