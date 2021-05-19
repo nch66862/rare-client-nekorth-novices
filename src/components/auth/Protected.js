@@ -8,11 +8,18 @@ export const Protected = (props) => {
     const history = useHistory()
     useEffect(() => {
         checkAuthenticated()
-            .then(valid => {
-                if (valid){
+            .then(res => {
+                if (res.valid){
+                    if (res.is_admin) {
+                        localStorage.setItem("rare_user_admin", "true")
+                    }
+                    else {
+                        localStorage.setItem("rare_user_admin", "false")
+                    }
                     setIsLoading(false)
                 } else {
                     localStorage.removeItem("rare_user_id")
+                    localStorage.removeItem("rare_user_admin")
                     history.push("/login")
                 }
             })

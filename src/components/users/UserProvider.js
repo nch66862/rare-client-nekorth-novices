@@ -77,7 +77,7 @@ export const UserProvider = (props) => {
         })
             .then(res => res.json())
             .then(res => {
-                return res.valid
+                return res
             })
     }
     const changeAuthorStatus = (userId, action) => {
