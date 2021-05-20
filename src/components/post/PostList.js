@@ -10,7 +10,7 @@ export const PostList = () => {
   const [searchTerm, setSearchTerm] = useState("")
   const [sort, setSort] = useState("")
   const [gotApproval, setGotApproval] = useState(false)
-  const { getPostsByUserId, getAllPosts, approvePost, searchPosts, sortPosts } = useContext(PostContext)
+  const { getPostsByUserId, getAllPosts, approvePost, searchPosts, sortPosts, deletePost } = useContext(PostContext)
   const history = useHistory()
   const urlPath = history.location.pathname
   const checkPath = () => {
