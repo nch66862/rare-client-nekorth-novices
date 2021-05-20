@@ -5,17 +5,18 @@ import Logo from "./image.png"
 import { UserContext } from "../users/UserProvider"
 
 export const NavBar = () => {
-    // const {admin, checkAdmin} = useContext(UserContext)
     const admin = true
     const history = useHistory()
-    // useEffect(() => {
-    //     checkAdmin()
-    // }, [])
+    let profile = 0
+
+    const {openUserProfile} = useContext(UserContext)   
+    openUserProfile()
+    .then(res => profile=res)
 
     return (
         <ul className="navbar">
             <li className="navbar__item">
-                <img className="navbar__logo" src={Logo} />
+                <button onClick={() => history.push(`/users/detail/${profile}`)}><img className="navbar__logo" src={Logo} />User Profile</button>
             </li>
             <li className="navbar__item">
                 <Link className="navbar__link" to="/posts">Posts</Link>

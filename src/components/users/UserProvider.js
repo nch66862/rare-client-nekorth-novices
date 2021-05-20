@@ -85,8 +85,28 @@ export const UserProvider = (props) => {
             })
         })
     }
+
+    const openUserProfile = () => {
+        return fetch("http://localhost:8000/users/user_profile",{
+            headers:{
+                "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
+            }
+        })
+        .then(res => res.json())
+    }
+
+    const subscriberCount = () => {
+        return fetch("http://localhost:8000/users/subscriber_count",{
+            headers:{
+                "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
+            }
+        })
+        .then(res => res.json())
+    }
     return (
-        <UserContext.Provider value={{ getAllUsers, rareUsers, getUserById, changeSubscribed, checkSubscribed, checkAdmin, admin, changeAuthorStatus, checkAuthenticated, getInactiveUsers }}>
+        <UserContext.Provider value={{ getAllUsers, rareUsers, getUserById, changeSubscribed, checkSubscribed, 
+                                        changeAuthorStatus, checkAuthenticated, getInactiveUsers, openUserProfile, 
+                                        subscriberCount }}>
 
             {props.children}
         </UserContext.Provider>
