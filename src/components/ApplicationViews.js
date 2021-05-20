@@ -15,6 +15,7 @@ import { TagList } from "./tags/TagList"
 import { TagProvider } from "./tags/TagProvider"
 import { UserDetail } from "./users/UserDetail"
 import { Protected } from "./auth/Protected"
+import { InactiveUserList } from "./users/InactiveUserList"
 
 export const ApplicationViews = () => {
     return <>
@@ -82,6 +83,17 @@ export const ApplicationViews = () => {
                         </PostProvider>
                     </Protected>
                 </Route>
+                <Route exact path="/posts/edit/:postId(\d+)">
+                    <Protected>
+                        <PostProvider>
+                            <CategoryProvider>
+                                <TagProvider>
+                                    <PostForm />
+                                </TagProvider>
+                            </CategoryProvider>
+                        </PostProvider>
+                    </Protected>
+                </Route>
                 <Route exact path="/posts/detail/:postId(\d+)">
                     <Protected>
                         <ReactionProvider>
@@ -96,6 +108,11 @@ export const ApplicationViews = () => {
                 <Route exact path="/users">
                     <Protected>
                         <UserList />
+                    </Protected>
+                </Route>
+                <Route exact path="/users/inactive">
+                    <Protected>
+                        <InactiveUserList />
                     </Protected>
                 </Route>
                 <Route exact path="/users/detail/:userId(\d+)">

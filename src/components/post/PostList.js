@@ -13,41 +13,37 @@ export const PostList = () => {
   const { getPostsByUserId, getAllPosts, approvePost, searchPosts, sortPosts } = useContext(PostContext)
   const history = useHistory()
   const urlPath = history.location.pathname
-
-  useEffect(() => {
-    getAllCategories()
+  const checkPath = () => {
     if (urlPath === "/posts/my-posts") {
-      console.log("myposts, ")
       getPostsByUserId()
         .then(setPosts)
     }
     else if (urlPath === "/posts") {
-      console.log("allposts")
       getAllPosts()
         .then(setPosts)
     }
     else if (urlPath === "/posts/unapproved-posts") {
       getAllPosts()
         .then(result => {
-          
+     
         })
     }
+  }
+  useEffect(() => {
+    checkPath()
   }, [])
   useEffect(()=>{
     if(searchTerm.length){
         searchPosts(searchTerm).then(setPosts)
     }else{
-      // need to implement that function i made parse url or something on diff branch
-      getAllPosts().then(setPosts)
+      checkPath()
     }
 },[searchTerm])
   useEffect(()=>{
     if(sort.length && sort !== "0"){
       sortPosts(sort).then(setPosts)
     }else{
-      // need to implement that function i made parse url or something on diff branch
-
-      getAllPosts().then(setPosts)
+      checkPath()
     }
   },[sort])
 
@@ -82,6 +78,12 @@ export const PostList = () => {
             <Link to={`/posts/detail/${post.id}`}>
               Post Details
             </Link>
+            {post.ownership ? <> <Link to={`/posts/edit/${post.id}`}>
+              Edit
+            </Link>
+            <Button color="danger" onClick={e=> {
+              e.preventDefault()
+              deletePost(post.id).then(()=>checkPath())} }>delete</Button></>:<></>}
             <ListGroupItemText>
               {urlPath === "/posts/unapproved-posts" && <Button onClick={() => handleApprovePost(post.id)}>Approve</Button>}
             </ListGroupItemText>
