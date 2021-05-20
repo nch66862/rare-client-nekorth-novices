@@ -49,9 +49,11 @@ export const ApplicationViews = () => {
                 <Route exact path="/posts">
                     <Protected>
                         <CategoryProvider>
-                            <PostProvider>
-                                <PostList />
-                            </PostProvider>
+                            <UserProvider>
+                                <PostProvider>
+                                    <PostList />
+                                </PostProvider>
+                            </UserProvider>
                         </CategoryProvider>
                     </Protected>
                 </Route>
@@ -59,7 +61,9 @@ export const ApplicationViews = () => {
                     <Protected>
                         <CategoryProvider>
                             <PostProvider>
-                                <PostList />
+                                <UserProvider>
+                                    <PostList />
+                                </UserProvider>
                             </PostProvider>
                         </CategoryProvider>
                     </Protected>
@@ -68,7 +72,9 @@ export const ApplicationViews = () => {
                     <Protected>
                         <CategoryProvider>
                             <PostProvider>
-                                <PostList />
+                                <UserProvider>
+                                    <PostList />
+                                </UserProvider>
                             </PostProvider>
                         </CategoryProvider>
                     </Protected>
