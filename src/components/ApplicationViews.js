@@ -16,6 +16,7 @@ import { TagProvider } from "./tags/TagProvider"
 import { UserDetail } from "./users/UserDetail"
 import { Protected } from "./auth/Protected"
 import { InactiveUserList } from "./users/InactiveUserList"
+import { EditUserForm } from "./users/EditUserForm"
 
 export const ApplicationViews = () => {
     return <>
@@ -118,6 +119,11 @@ export const ApplicationViews = () => {
                 <Route exact path="/users/detail/:userId(\d+)">
                     <Protected>
                         <UserDetail />
+                    </Protected>
+                </Route>
+                <Route exact path="/users/detail/:userId(\d+)/edit">
+                    <Protected>
+                        <EditUserForm />
                     </Protected>
                 </Route>
             </UserProvider>
