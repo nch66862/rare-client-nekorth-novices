@@ -73,7 +73,7 @@ export const EditUserForm = () => {
                 <FormGroup>
                     <Label for="exampleCheckbox">Admin</Label>
                     <div>
-                        <CustomInput onChange={handleEditAdmin} value={editedUser.isAdmin} type="switch" name="isAdmin" label="Admin User?" id="idAdminCheckbox" />
+                        <CustomInput onChange={handleEditAdmin} value={editedUser.isAdmin} checked={editedUser.isAdmin} type="switch" name="isAdmin" label="Admin User?" id="idAdminCheckbox" />
                     </div>
                 </FormGroup>
                 <fieldset style={{
