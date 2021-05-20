@@ -91,7 +91,6 @@ export const UserProvider = (props) => {
             body: JSON.stringify({
                 "action": action,
                 "user_id": userId,
-                "approver_one_id": parseInt(localStorage.getItem("rare_user_id"))
             })
         })
     }
