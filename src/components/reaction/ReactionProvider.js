@@ -41,9 +41,19 @@ export const ReactionProvider = props => {
             .then(response => response.json())
             .then(getReactions)
     }
+    const addPostReaction = reaction => {
+        return fetch('http://localhost:8000/postreactions',{
+            method: "POST",
+            headers:{
+                "Authorization": `Token ${localStorage.getItem("rare_user_id")}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(reaction)
+        })
+    }
 
     return (
-        <ReactionContext.Provider value={{ createReactionImageString, b64, createReaction, getReactions, setB64, reactions }} >
+        <ReactionContext.Provider value={{ createReactionImageString, b64, createReaction, getReactions, setB64, reactions, addPostReaction }} >
             { props.children }
         </ReactionContext.Provider>
     )
