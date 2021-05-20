@@ -22,29 +22,34 @@ export const EditUserForm = () => {
     const handleEditUser = () => {
 
     }
+    const handleEditField = (event) => {
+        let newUserObj = {...editedUser}
+        newUserObj[event.target.name] = event.target.value
+        setEditedUser(newUserObj)
+    }
     return (
         <main style={{ textAlign: "center" }}>
             <form className="form--login" onSubmit={handleEditUser}>
                 <h1 className="h3 mb-3 font-weight-normal">Edit User</h1>
                 <fieldset>
                     <label htmlFor="firstName"> First Name </label>
-                    <input value={editedUser.firstName} type="text" name="firstName" className="form-control" placeholder="First name" required autoFocus />
+                    <input onChange={handleEditField} value={editedUser.firstName} type="text" name="firstName" className="form-control" placeholder="First name" required autoFocus />
                 </fieldset>
                 <fieldset>
                     <label htmlFor="lastName"> Last Name </label>
-                    <input value={editedUser.lastName} type="text" name="lastName" className="form-control" placeholder="Last name" required />
+                    <input onChange={handleEditField} value={editedUser.lastName} type="text" name="lastName" className="form-control" placeholder="Last name" required />
                 </fieldset>
                 <fieldset>
                     <label htmlFor="displayName"> Username </label>
-                    <input value={editedUser.username} type="text" name="displayName" className="form-control" placeholder="Display name" required />
+                    <input onChange={handleEditField} value={editedUser.username} type="text" name="displayName" className="form-control" placeholder="Display name" required />
                 </fieldset>
                 <fieldset>
                     <label htmlFor="bio"> Bio </label>
-                    <input value={editedUser.bio} type="text" name="bio" className="form-control" placeholder="Bio"/>
+                    <input onChange={handleEditField} value={editedUser.bio} type="text" name="bio" className="form-control" placeholder="Bio"/>
                 </fieldset>
                 <fieldset>
                     <label htmlFor="inputEmail"> Email address </label>
-                    <input value={editedUser.email} type="email" name="email" className="form-control" placeholder="Email address" required />
+                    <input onChange={handleEditField} value={editedUser.email} type="email" name="email" className="form-control" placeholder="Email address" required />
                 </fieldset>
                 <fieldset style={{
                     textAlign: "center"
