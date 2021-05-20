@@ -7,7 +7,7 @@ import { CommentContext } from "../comment/CommentProvider"
 import { ReactionContext } from "../reaction/ReactionProvider"
 import "./PostDetail.css"
 import {
-  Card, CardText, CardBody,
+  Card, CardText, CardBody, CardImg,
   CardTitle, CardSubtitle, Button, 
   ListGroup, Dropdown, DropdownToggle, 
   DropdownMenu, DropdownItem
@@ -23,7 +23,7 @@ export const PostDetail = () => {
     'title': "",
     'user':{},
     'publication_date': "",
-    'imageUrl': "",
+    'image_url': "",
     'content': "",
     'approved': false,
     'tag_set': [],
@@ -65,6 +65,7 @@ export const PostDetail = () => {
   return (
     <>
       <Card>
+      <CardImg top width="100%" src={post.image_url} alt="Card image cap" />
         <CardBody>
           <CardTitle className="text-center">{post.title}</CardTitle>
           <CardSubtitle className="text-center">Category: {post.category?.label}</CardSubtitle>
