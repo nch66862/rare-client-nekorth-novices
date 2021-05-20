@@ -7,7 +7,7 @@ import { UserContext } from "./UserProvider"
 export const EditUserForm = () => {
     const history = useHistory()
     const { userId } = useParams()
-    const { getUserById } = useContext(UserContext)
+    const { getUserById, updateUser } = useContext(UserContext)
     const [editedUser, setEditedUser] = useState({
         firstName: "",
         lastName: "",
@@ -19,6 +19,7 @@ export const EditUserForm = () => {
         getUserById(userId)
             .then(rareUser => {
                 setEditedUser({
+                    id: rareUser.id,
                     firstName: rareUser.user.first_name,
                     lastName: rareUser.user.last_name,
                     username: rareUser.user.username,
@@ -28,7 +29,8 @@ export const EditUserForm = () => {
             })
     }, [])
     const handleEditUser = () => {
-
+        updateUser(editedUser)
+            .then(() => history.push(`/users/detail/${editedUser.id}`))
     }
     const handleEditField = (event) => {
         let newUserObj = {...editedUser}

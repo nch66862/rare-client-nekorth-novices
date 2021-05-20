@@ -4,7 +4,7 @@ import { Button, Card, CardBody, CardImg, CardSubtitle, CardText, CardTitle } fr
 import { UserContext } from "./UserProvider";
 
 export const UserDetail = () => {
-    const { getUserById, changeSubscribed, checkSubscribed, checkAdmin, admin, changeAuthorStatus } = useContext(UserContext)
+    const { getUserById, changeSubscribed, checkSubscribed, changeAuthorStatus } = useContext(UserContext)
     const [rareUser, setRareUser] = useState({})
     const { userId } = useParams()
     const [subscribed, setSubscribed] = useState(false)

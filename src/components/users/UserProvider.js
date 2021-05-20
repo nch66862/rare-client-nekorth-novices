@@ -30,6 +30,16 @@ export const UserProvider = (props) => {
         })
         .then(res => res.json())
     }
+    const updateUser = (updatedUser) =>{
+        return fetch(`http://localhost:8000/users/${updatedUser.id}`,{
+            method: "PUT",
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
+            },
+            body: JSON.stringify(updatedUser)
+        })
+    }
     // const getSubcriptions = (userId) => {
     //     return fetch(`http://localhost:8000/subscriptions/${userId}`)
     //     .then(res => res.json())
@@ -86,7 +96,7 @@ export const UserProvider = (props) => {
         })
     }
     return (
-        <UserContext.Provider value={{ getAllUsers, rareUsers, getUserById, changeSubscribed, checkSubscribed, changeAuthorStatus, checkAuthenticated, getInactiveUsers }}>
+        <UserContext.Provider value={{ getAllUsers, rareUsers, getUserById, changeSubscribed, checkSubscribed, changeAuthorStatus, checkAuthenticated, getInactiveUsers, updateUser }}>
 
             {props.children}
         </UserContext.Provider>
