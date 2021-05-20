@@ -1,7 +1,7 @@
-import { Button } from "bootstrap"
+import { Button } from "reactstrap";
 import React, { useContext, useEffect, useState } from "react"
 import { useHistory, useParams } from "react-router-dom"
-import "./Auth.css"
+import "../auth/Auth.css"
 import { UserContext } from "./UserProvider"
 
 export const EditUserForm = () => {
@@ -15,19 +15,17 @@ export const EditUserForm = () => {
         bio: "",
         email: ""
     })
-
     useEffect(() => {
         getUserById(rareUserId)
             .then(setEditedUser)
     }, [])
+    const handleEditUser = () => {
+
+    }
     return (
         <main style={{ textAlign: "center" }}>
-            <dialog className="dialog dialog--password" ref={passwordDialog}>
-                <div>Passwords do not match</div>
-                <button className="button--close" onClick={e => passwordDialog.current.close()}>Close</button>
-            </dialog>
-            <form className="form--login" onSubmit={handleRegister}>
-                <h1 className="h3 mb-3 font-weight-normal">Register an account</h1>
+            <form className="form--login" onSubmit={handleEditUser}>
+                <h1 className="h3 mb-3 font-weight-normal">Edit User</h1>
                 <fieldset>
                     <label htmlFor="firstName"> First Name </label>
                     <input value={editedUser.firstName} type="text" name="firstName" className="form-control" placeholder="First name" required autoFocus />
@@ -51,7 +49,7 @@ export const EditUserForm = () => {
                 <fieldset style={{
                     textAlign: "center"
                 }}>
-                    <button className="btn btn-1 btn-sep icon-send" type="submit">Submit Edit</button>
+                    <Button type="submit">Submit Edit</Button>
                 </fieldset>
             </form>
             <section className="link--register">
