@@ -9,8 +9,8 @@ export const NavBar = () => {
     const history = useHistory()
     let profile = 0
 
-    const {openUserProfile} = useContext(UserContext)   
-    openUserProfile()
+    const {getCurrentUser} = useContext(UserContext)   
+    getCurrentUser()
     .then(res => profile=res)
 
     return (

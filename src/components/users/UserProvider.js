@@ -86,7 +86,7 @@ export const UserProvider = (props) => {
         })
     }
 
-    const openUserProfile = () => {
+    const getCurrentUser = () => {
         return fetch("http://localhost:8000/users/user_profile",{
             headers:{
                 "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
@@ -105,7 +105,7 @@ export const UserProvider = (props) => {
     }
     return (
         <UserContext.Provider value={{ getAllUsers, rareUsers, getUserById, changeSubscribed, checkSubscribed, 
-                                        changeAuthorStatus, checkAuthenticated, getInactiveUsers, openUserProfile, 
+                                        changeAuthorStatus, checkAuthenticated, getInactiveUsers, getCurrentUser, 
                                         subscriberCount }}>
 
             {props.children}
