@@ -86,7 +86,7 @@ export const UserProvider = (props) => {
         })
     }
     return (
-        <UserContext.Provider value={{ getAllUsers, rareUsers, getUserById, changeSubscribed, checkSubscribed, checkAdmin, admin, changeAuthorStatus, checkAuthenticated, getInactiveUsers }}>
+        <UserContext.Provider value={{ getAllUsers, rareUsers, getUserById, changeSubscribed, checkSubscribed, changeAuthorStatus, checkAuthenticated, getInactiveUsers }}>
 
             {props.children}
         </UserContext.Provider>
