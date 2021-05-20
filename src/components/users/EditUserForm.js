@@ -6,7 +6,7 @@ import { UserContext } from "./UserProvider"
 
 export const EditUserForm = () => {
     const history = useHistory()
-    const { rareUserId } = useParams()
+    const { userId } = useParams()
     const { getUserById } = useContext(UserContext)
     const [editedUser, setEditedUser] = useState({
         firstName: "",
@@ -16,8 +16,16 @@ export const EditUserForm = () => {
         email: ""
     })
     useEffect(() => {
-        getUserById(rareUserId)
-            .then(setEditedUser)
+        getUserById(userId)
+            .then(rareUser => {
+                setEditedUser({
+                    firstName: rareUser.user.first_name,
+                    lastName: rareUser.user.last_name,
+                    username: rareUser.user.username,
+                    bio: rareUser.bio,
+                    email: rareUser.user.email
+                })
+            })
     }, [])
     const handleEditUser = () => {
 
@@ -41,7 +49,7 @@ export const EditUserForm = () => {
                 </fieldset>
                 <fieldset>
                     <label htmlFor="displayName"> Username </label>
-                    <input onChange={handleEditField} value={editedUser.username} type="text" name="displayName" className="form-control" placeholder="Display name" required />
+                    <input onChange={handleEditField} value={editedUser.username} type="text" name="username" className="form-control" placeholder="Display name" required />
                 </fieldset>
                 <fieldset>
                     <label htmlFor="bio"> Bio </label>
