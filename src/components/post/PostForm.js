@@ -71,7 +71,6 @@ export const PostForm = (props) => {
 
     return (
         <Form className="postForm" autoComplete="on">
-            {console.log(post)}
             <h2 className="postForm__title">New Post</h2>
             <fieldset>
                 <FormGroup>

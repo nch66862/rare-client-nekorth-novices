@@ -47,23 +47,29 @@ export const ApplicationViews = () => {
                 </Route>
                 <Route exact path="/posts">
                     <Protected>
-                        <PostProvider>
-                            <PostList />
-                        </PostProvider>
+                        <CategoryProvider>
+                            <PostProvider>
+                                <PostList />
+                            </PostProvider>
+                        </CategoryProvider>
                     </Protected>
                 </Route>
                 <Route exact path="/posts/my-posts">
                     <Protected>
-                        <PostProvider>
-                            <PostList />
-                        </PostProvider>
+                        <CategoryProvider>
+                            <PostProvider>
+                                <PostList />
+                            </PostProvider>
+                        </CategoryProvider>
                     </Protected>
                 </Route>
                 <Route exact path="/posts/unapproved-posts">
                     <Protected>
-                        <PostProvider>
-                            <PostList />
-                        </PostProvider>
+                        <CategoryProvider>
+                            <PostProvider>
+                                <PostList />
+                            </PostProvider>
+                        </CategoryProvider>
                     </Protected>
                 </Route>
                 <Route exact path="/posts/create">

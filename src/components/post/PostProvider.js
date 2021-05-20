@@ -12,6 +12,14 @@ export const PostProvider = (props) => {
     })
     .then(res => res.json())
   }
+  const searchPosts = (search) => {
+    return fetch(`http://localhost:8000/posts?q=${search}`,{
+        headers:{
+            "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
+        }
+    })
+    .then(res=> res.json())
+  }
 
   const getPostById = (id) => {
     return fetch(`http://localhost:8000/posts/${id}`,{
@@ -53,6 +61,13 @@ export const PostProvider = (props) => {
       body: JSON.stringify({})
     })
   }
+  const sortPosts = (sort) => {
+    return fetch(`http://localhost:8000/posts?category=${sort}`,{
+      headers: {
+        "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
+      }
+    }).then(res=>res.json())
+  }
   const deletePost = (postId) => {
     return fetch(`http://localhost:8000/posts/${postId}`,{
       method:"DELETE",
@@ -75,7 +90,7 @@ export const PostProvider = (props) => {
 
   return (
     <PostContext.Provider value={{
-      getPostById, createPost, getAllPosts, getPostsByUserId, approvePost, deletePost, editPost
+      getPostById, createPost, getAllPosts, getPostsByUserId, approvePost, deletePost, editPost, sortPosts
     }}>
       {props.children}
     </PostContext.Provider>

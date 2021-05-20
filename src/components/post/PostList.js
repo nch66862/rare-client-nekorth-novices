@@ -1,12 +1,16 @@
 import React, { useContext, useEffect, useState } from "react"
 import { Link, useHistory } from "react-router-dom"
 import { ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, Button } from 'reactstrap';
+import { CategoryContext } from "../categories/CategoryProvider";
 import { PostContext } from "./PostProvider";
 
 export const PostList = () => {
   const [posts, setPosts] = useState([])
+  const {categories, getAllCategories} = useContext(CategoryContext)
+  const [searchTerm, setSearchTerm] = useState("")
+  const [sort, setSort] = useState("")
   const [gotApproval, setGotApproval] = useState(false)
-  const { getPostsByUserId, getAllPosts, approvePost, deletePost } = useContext(PostContext)
+  const { getPostsByUserId, getAllPosts, approvePost, searchPosts, sortPosts } = useContext(PostContext)
   const history = useHistory()
   const urlPath = history.location.pathname
   const checkPath = () => {
@@ -21,13 +25,27 @@ export const PostList = () => {
     else if (urlPath === "/posts/unapproved-posts") {
       getAllPosts()
         .then(result => {
-          
+     
         })
     }
   }
   useEffect(() => {
     checkPath()
   }, [])
+  useEffect(()=>{
+    if(searchTerm.length){
+        searchPosts(searchTerm).then(setPosts)
+    }else{
+      checkPath()
+    }
+},[searchTerm])
+  useEffect(()=>{
+    if(sort.length && sort !== "0"){
+      sortPosts(sort).then(setPosts)
+    }else{
+      checkPath()
+    }
+  },[sort])
 
   const handleApprovePost = (postId) => {
     approvePost(postId)
@@ -39,6 +57,14 @@ export const PostList = () => {
 
   return (
     <section>
+      <label htmlFor="searchTerm">Search:</label>
+      <input type="text" name="searchTerm" autoFocus className="form-control" value={searchTerm}
+        onChange={(e)=> {setSearchTerm(e.target.value)}}/>
+      <select name="sort_query" className="form-control" value={sort}
+        onChange={(e)=> setSort(e.target.value)}>
+          <option value="0">Sort By Category ...</option>
+          {categories.map(category => <option value={category.id}>{category.label}</option>)}
+      </select>
       <ListGroup>
         {posts?.map(post => {
           return (<ListGroupItem key={post.id}>
