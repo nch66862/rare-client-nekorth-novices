@@ -1,4 +1,4 @@
-import { Button } from "reactstrap";
+import { Button, CustomInput, FormGroup, Label } from "reactstrap";
 import React, { useContext, useEffect, useState } from "react"
 import { useHistory, useParams } from "react-router-dom"
 import "../auth/Auth.css"
@@ -7,13 +7,14 @@ import { UserContext } from "./UserProvider"
 export const EditUserForm = () => {
     const history = useHistory()
     const { userId } = useParams()
-    const { getUserById, updateUser } = useContext(UserContext)
+    const { getUserById, updateUser, changeRank } = useContext(UserContext)
     const [editedUser, setEditedUser] = useState({
         firstName: "",
         lastName: "",
         username: "",
         bio: "",
-        email: ""
+        email: "",
+        isAdmin: false
     })
     useEffect(() => {
         getUserById(userId)
@@ -24,18 +25,25 @@ export const EditUserForm = () => {
                     lastName: rareUser.user.last_name,
                     username: rareUser.user.username,
                     bio: rareUser.bio,
-                    email: rareUser.user.email
+                    email: rareUser.user.email,
+                    isAdmin: rareUser.user.is_staff
                 })
             })
     }, [])
     const handleEditUser = (event) => {
         event.preventDefault()
         updateUser(editedUser)
+            .then(() => changeRank(editedUser))
             .then(() => history.push(`/users/detail/${editedUser.id}`))
     }
     const handleEditField = (event) => {
-        let newUserObj = {...editedUser}
+        let newUserObj = { ...editedUser }
         newUserObj[event.target.name] = event.target.value
+        setEditedUser(newUserObj)
+    }
+    const handleEditAdmin = (event) => {
+        let newUserObj = { ...editedUser }
+        newUserObj[event.target.name] = event.target.checked
         setEditedUser(newUserObj)
     }
     return (
@@ -56,12 +64,18 @@ export const EditUserForm = () => {
                 </fieldset>
                 <fieldset>
                     <label htmlFor="bio"> Bio </label>
-                    <input onChange={handleEditField} value={editedUser.bio} type="text" name="bio" className="form-control" placeholder="Bio"/>
+                    <input onChange={handleEditField} value={editedUser.bio} type="text" name="bio" className="form-control" placeholder="Bio" />
                 </fieldset>
                 <fieldset>
                     <label htmlFor="inputEmail"> Email address </label>
                     <input onChange={handleEditField} value={editedUser.email} type="email" name="email" className="form-control" placeholder="Email address" required />
                 </fieldset>
+                <FormGroup>
+                    <Label for="exampleCheckbox">Admin</Label>
+                    <div>
+                        <CustomInput onChange={handleEditAdmin} value={editedUser.isAdmin} type="switch" name="isAdmin" label="Admin User?" id="idAdminCheckbox" />
+                    </div>
+                </FormGroup>
                 <fieldset style={{
                     textAlign: "center"
                 }}>
