@@ -2,15 +2,18 @@ import React, { useContext, useEffect, useState } from "react"
 import { Link, useHistory } from "react-router-dom"
 import { ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, Button } from 'reactstrap';
 import { CategoryContext } from "../categories/CategoryProvider";
+import { UserContext } from "../users/UserProvider";
 import { PostContext } from "./PostProvider";
 
 export const PostList = () => {
   const [posts, setPosts] = useState([])
   const {categories, getAllCategories} = useContext(CategoryContext)
+  const {getAllUsers, rareUsers} = useContext(UserContext)
+  const [sortUser, setSortUser] = useState("")
   const [searchTerm, setSearchTerm] = useState("")
   const [sort, setSort] = useState("")
   const [gotApproval, setGotApproval] = useState(false)
-  const { getPostsByUserId, getAllPosts, approvePost, searchPosts, sortPosts, deletePost } = useContext(PostContext)
+  const { getPostsByUserId, getAllPosts, approvePost, searchPosts, sortPostsByCategory, deletePost, sortPostsByUser } = useContext(PostContext)
   const history = useHistory()
   const urlPath = history.location.pathname
   const checkPath = () => {
@@ -30,7 +33,7 @@ export const PostList = () => {
     }
   }
   useEffect(() => {
-    checkPath()
+   getAllCategories().then(()=>getAllUsers()).then(()=>checkPath())
   }, [])
   useEffect(()=>{
     if(searchTerm.length){
@@ -41,12 +44,18 @@ export const PostList = () => {
 },[searchTerm])
   useEffect(()=>{
     if(sort.length && sort !== "0"){
-      sortPosts(sort).then(setPosts)
+      sortPostsByCategory(sort).then(setPosts)
     }else{
       checkPath()
     }
   },[sort])
-
+  useEffect(()=>{
+    if(sortUser.length && sortUser !== "0"){
+      sortPostsByUser(sortUser).then(setPosts)
+    }else{
+      checkPath()
+    }
+  },[sortUser])
   const handleApprovePost = (postId) => {
     approvePost(postId)
       .then(() => {
@@ -64,6 +73,11 @@ export const PostList = () => {
         onChange={(e)=> setSort(e.target.value)}>
           <option value="0">Sort By Category ...</option>
           {categories.map(category => <option value={category.id}>{category.label}</option>)}
+      </select>
+      <select name="sort_user" className="form-control" value={sortUser}
+        onChange={(e)=> setSortUser(e.target.value)}>
+          <option value="0">Sort By User ...</option>
+          {rareUsers.map(rareUser => <option value={rareUser.id}>{rareUser.user.username}</option>)}
       </select>
       <ListGroup>
         {posts?.map(post => {
