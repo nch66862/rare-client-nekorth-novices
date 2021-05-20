@@ -28,7 +28,8 @@ export const EditUserForm = () => {
                 })
             })
     }, [])
-    const handleEditUser = () => {
+    const handleEditUser = (event) => {
+        event.preventDefault()
         updateUser(editedUser)
             .then(() => history.push(`/users/detail/${editedUser.id}`))
     }

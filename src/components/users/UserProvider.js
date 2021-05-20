@@ -30,7 +30,7 @@ export const UserProvider = (props) => {
         })
         .then(res => res.json())
     }
-    const updateUser = (updatedUser) =>{
+    const updateUser = (updatedUser) => {
         return fetch(`http://localhost:8000/users/${updatedUser.id}`,{
             method: "PUT",
             headers:{
