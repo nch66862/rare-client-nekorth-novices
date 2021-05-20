@@ -1,21 +1,15 @@
-import React, { useContext, useEffect } from "react"
+import React from "react"
 import { Link, useHistory } from "react-router-dom"
 import "./NavBar.css"
 import Logo from "./image.png"
-import { UserContext } from "../users/UserProvider"
 
 export const NavBar = () => {
-    // const {admin, checkAdmin} = useContext(UserContext)
-    const admin = true
     const history = useHistory()
-    // useEffect(() => {
-    //     checkAdmin()
-    // }, [])
-
+    console.log(localStorage.getItem("rare_user_admin"))
     return (
         <ul className="navbar">
             <li className="navbar__item">
-                <img className="navbar__logo" src={Logo} />
+                <img className="navbar__logo" src={Logo} alt="tragic trolls logo" />
             </li>
             <li className="navbar__item">
                 <Link className="navbar__link" to="/posts">Posts</Link>
@@ -29,26 +23,25 @@ export const NavBar = () => {
             <li className="navbar__item">
                 <Link className="navbar__link" to="/users">Users</Link>
             </li>
-            {localStorage.getItem("rare_user_admin") === "true" &&
-                <li className="navbar__item">
-                    <Link className="navbar__link" to="/posts/unapproved-posts">Unapproved Posts</Link>
-                </li>
+            {localStorage.getItem("rare_user_admin") === "true"
                 &&
-                <li className="navbar__item">
-                    <Link className="navbar__link" to="/users/inactive">Inactive Users</Link>
-                </li>
-                &&
-                <li className="navbar__item">
-                    <Link className="navbar__link" to="/tags">Tags</Link>
-                </li>
-                &&
-                <li className="navbar__item">
-                    <Link className="navbar__link" to="/categories">Categories</Link>
-                </li>
-                &&
-                <li className="navbar__item">
-                    <Link className="navbar__link" to="/reactions">Reactions</Link>
-                </li>
+                <>
+                    <li className="navbar__item">
+                        <Link className="navbar__link" to="/posts/unapproved-posts">Unapproved Posts</Link>
+                    </li>
+                    <li className="navbar__item">
+                        <Link className="navbar__link" to="/users/inactive">Inactive Users</Link>
+                    </li>
+                    <li className="navbar__item">
+                        <Link className="navbar__link" to="/tags">Tags</Link>
+                    </li>
+                    <li className="navbar__item">
+                        <Link className="navbar__link" to="/categories">Categories</Link>
+                    </li>
+                    <li className="navbar__item">
+                        <Link className="navbar__link" to="/reactions">Reactions</Link>
+                    </li>
+                </>
             }
             {
                 (localStorage.getItem("rare_user_id") !== null) ?
