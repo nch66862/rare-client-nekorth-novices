@@ -2,9 +2,11 @@ import React, { useContext, useEffect, useState } from "react"
 import { ReactionContext } from "./ReactionProvider"
 import { Modal, Button, ModalHeader, ModalBody, ModalFooter } from "reactstrap"
 import { UserContext } from "../users/UserProvider"
+import { ImageContext } from "../images/ImageProvider"
 
 export const ReactionList = () => {
-  const {reactions, getReactions, createReaction, createReactionImageString, b64, setB64} = useContext(ReactionContext)
+  const {reactions, getReactions, createReaction} = useContext(ReactionContext)
+  const {createImageString, b64, setB64} = useContext(ImageContext)
   const [showForm, setShowForm] = useState(false)
   const [reaction, setReaction] = useState({
     "label": "",
@@ -50,7 +52,7 @@ export const ReactionList = () => {
         <form className="reactionForm">
           <label htmlFor="reactionLabel">Label: </label>
           <input type="text" id="label" onChange={handleInputChange} value={reaction.label}></input><br></br>
-          <input type="file" id="reaction_image" onChange={createReactionImageString} />
+          <input type="file" id="reaction_image" onChange={createImageString} />
         </form>
       </ModalBody>
       <ModalFooter>

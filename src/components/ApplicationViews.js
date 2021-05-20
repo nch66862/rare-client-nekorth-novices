@@ -16,6 +16,7 @@ import { TagProvider } from "./tags/TagProvider"
 import { UserDetail } from "./users/UserDetail"
 import { Protected } from "./auth/Protected"
 import { InactiveUserList } from "./users/InactiveUserList"
+import { ImageProvider } from "./images/ImageProvider"
 
 export const ApplicationViews = () => {
     return <>
@@ -23,104 +24,106 @@ export const ApplicationViews = () => {
             margin: "5rem 2rem",
             lineHeight: "1.75rem"
         }}>
-            <UserProvider>
-                <Route exact path="/tags">
-                    <Protected>
-                        <TagProvider>
-                            <TagList />
-                        </TagProvider>
-                    </Protected>
-                </Route>
-                <Route exact path="/categories">
-                    <Protected>
-                        <CategoryProvider>
-                            <CategoryList />
-                        </CategoryProvider>
-                    </Protected>
-                </Route>
-                <Route exact path="/reactions">
-                    <Protected>
-                        <ReactionProvider>
-                            <ReactionList />
-                        </ReactionProvider>
-                    </Protected>
-                </Route>
-                <Route exact path="/posts">
-                    <Protected>
-                        <CategoryProvider>
-                            <PostProvider>
-                                <PostList />
-                            </PostProvider>
-                        </CategoryProvider>
-                    </Protected>
-                </Route>
-                <Route exact path="/posts/my-posts">
-                    <Protected>
-                        <CategoryProvider>
-                            <PostProvider>
-                                <PostList />
-                            </PostProvider>
-                        </CategoryProvider>
-                    </Protected>
-                </Route>
-                <Route exact path="/posts/unapproved-posts">
-                    <Protected>
-                        <CategoryProvider>
-                            <PostProvider>
-                                <PostList />
-                            </PostProvider>
-                        </CategoryProvider>
-                    </Protected>
-                </Route>
-                <Route exact path="/posts/create">
-                    <Protected>
-                        <PostProvider>
+            <ImageProvider>
+                <UserProvider>
+                    <Route exact path="/tags">
+                        <Protected>
+                            <TagProvider>
+                                <TagList />
+                            </TagProvider>
+                        </Protected>
+                    </Route>
+                    <Route exact path="/categories">
+                        <Protected>
                             <CategoryProvider>
-                                <TagProvider>
-                                    <PostForm />
-                                </TagProvider>
+                                <CategoryList />
                             </CategoryProvider>
-                        </PostProvider>
-                    </Protected>
-                </Route>
-                <Route exact path="/posts/edit/:postId(\d+)">
-                    <Protected>
-                        <PostProvider>
+                        </Protected>
+                    </Route>
+                    <Route exact path="/reactions">
+                        <Protected>
+                            <ReactionProvider>
+                                <ReactionList />
+                            </ReactionProvider>
+                        </Protected>
+                    </Route>
+                    <Route exact path="/posts">
+                        <Protected>
                             <CategoryProvider>
-                                <TagProvider>
-                                    <PostForm />
-                                </TagProvider>
+                                <PostProvider>
+                                    <PostList />
+                                </PostProvider>
                             </CategoryProvider>
-                        </PostProvider>
-                    </Protected>
-                </Route>
-                <Route exact path="/posts/detail/:postId(\d+)">
-                    <Protected>
-                        <ReactionProvider>
+                        </Protected>
+                    </Route>
+                    <Route exact path="/posts/my-posts">
+                        <Protected>
+                            <CategoryProvider>
+                                <PostProvider>
+                                    <PostList />
+                                </PostProvider>
+                            </CategoryProvider>
+                        </Protected>
+                    </Route>
+                    <Route exact path="/posts/unapproved-posts">
+                        <Protected>
+                            <CategoryProvider>
+                                <PostProvider>
+                                    <PostList />
+                                </PostProvider>
+                            </CategoryProvider>
+                        </Protected>
+                    </Route>
+                    <Route exact path="/posts/create">
+                        <Protected>
                             <PostProvider>
-                                <CommentProvider>
-                                    <PostDetail />
-                                </CommentProvider>
+                                <CategoryProvider>
+                                    <TagProvider>
+                                        <PostForm />
+                                    </TagProvider>
+                                </CategoryProvider>
                             </PostProvider>
-                        </ReactionProvider>
-                    </Protected>
-                </Route>
-                <Route exact path="/users">
-                    <Protected>
-                        <UserList />
-                    </Protected>
-                </Route>
-                <Route exact path="/users/inactive">
-                    <Protected>
-                        <InactiveUserList />
-                    </Protected>
-                </Route>
-                <Route exact path="/users/detail/:userId(\d+)">
-                    <Protected>
-                        <UserDetail />
-                    </Protected>
-                </Route>
-            </UserProvider>
+                        </Protected>
+                    </Route>
+                    <Route exact path="/posts/edit/:postId(\d+)">
+                        <Protected>
+                            <PostProvider>
+                                <CategoryProvider>
+                                    <TagProvider>
+                                        <PostForm />
+                                    </TagProvider>
+                                </CategoryProvider>
+                            </PostProvider>
+                        </Protected>
+                    </Route>
+                    <Route exact path="/posts/detail/:postId(\d+)">
+                        <Protected>
+                            <ReactionProvider>
+                                <PostProvider>
+                                    <CommentProvider>
+                                        <PostDetail />
+                                    </CommentProvider>
+                                </PostProvider>
+                            </ReactionProvider>
+                        </Protected>
+                    </Route>
+                    <Route exact path="/users">
+                        <Protected>
+                            <UserList />
+                        </Protected>
+                    </Route>
+                    <Route exact path="/users/inactive">
+                        <Protected>
+                            <InactiveUserList />
+                        </Protected>
+                    </Route>
+                    <Route exact path="/users/detail/:userId(\d+)">
+                        <Protected>
+                            <UserDetail />
+                        </Protected>
+                    </Route>
+                </UserProvider>
+            </ImageProvider>
         </main>
     </>
 }
