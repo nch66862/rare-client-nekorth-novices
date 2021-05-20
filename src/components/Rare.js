@@ -5,6 +5,7 @@ import { NavBar } from "./nav/NavBar"
 import { Login } from "./auth/Login"
 import { Register } from "./auth/Register"
 import { UserProvider } from "./users/UserProvider"
+import { Protected } from "./auth/Protected"
 
 export const Rare = () => (
     <>
@@ -12,7 +13,9 @@ export const Rare = () => (
             if (localStorage.getItem("rare_user_id")) {
                 return <>
                     <UserProvider>
-                        <NavBar />
+                        <Protected>
+                            <NavBar />
+                        </Protected>
                         <ApplicationViews />
                     </UserProvider>
                 </>

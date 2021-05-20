@@ -28,17 +28,17 @@ export const PostList = () => {
     else if (urlPath === "/posts/unapproved-posts") {
       getAllPosts()
         .then(result => {
-     
+
         })
     }
   }
   useEffect(() => {
    getAllCategories().then(()=>getAllUsers()).then(()=>checkPath())
   }, [])
-  useEffect(()=>{
-    if(searchTerm.length){
-        searchPosts(searchTerm).then(setPosts)
-    }else{
+  useEffect(() => {
+    if (searchTerm.length) {
+      searchPosts(searchTerm).then(setPosts)
+    } else {
       checkPath()
     }
 },[searchTerm])
@@ -56,6 +56,7 @@ export const PostList = () => {
       checkPath()
     }
   },[sortUser])
+
   const handleApprovePost = (postId) => {
     approvePost(postId)
       .then(() => {
@@ -68,11 +69,11 @@ export const PostList = () => {
     <section>
       <label htmlFor="searchTerm">Search:</label>
       <input type="text" name="searchTerm" autoFocus className="form-control" value={searchTerm}
-        onChange={(e)=> {setSearchTerm(e.target.value)}}/>
+        onChange={(e) => { setSearchTerm(e.target.value) }} />
       <select name="sort_query" className="form-control" value={sort}
-        onChange={(e)=> setSort(e.target.value)}>
-          <option value="0">Sort By Category ...</option>
-          {categories.map(category => <option value={category.id}>{category.label}</option>)}
+        onChange={(e) => setSort(e.target.value)}>
+        <option value="0">Sort By Category ...</option>
+        {categories.map(category => <option value={category.id}>{category.label}</option>)}
       </select>
       <select name="sort_user" className="form-control" value={sortUser}
         onChange={(e)=> setSortUser(e.target.value)}>
@@ -92,12 +93,14 @@ export const PostList = () => {
             <Link to={`/posts/detail/${post.id}`}>
               Post Details
             </Link>
-            {post.ownership ? <> <Link to={`/posts/edit/${post.id}`}>
-              Edit
-            </Link>
-            <Button color="danger" onClick={e=> {
-              e.preventDefault()
-              deletePost(post.id).then(()=>checkPath())} }>delete</Button></>:<></>}
+            {post.ownership && <Link to={`/posts/edit/${post.id}`}>Edit</Link>}
+            {(post.ownership || localStorage.getItem("rare_user_admin") === "true") &&
+              <Button color="danger" onClick={e => {
+                e.preventDefault()
+                deletePost(post.id).then(() => checkPath())
+              }}>delete
+              </Button>
+            }
             <ListGroupItemText>
               {urlPath === "/posts/unapproved-posts" && <Button onClick={() => handleApprovePost(post.id)}>Approve</Button>}
             </ListGroupItemText>
