@@ -40,7 +40,7 @@ export const ReactionProvider = props => {
     }
 
     return (
-        <ReactionContext.Provider value={{createReaction, getReactions, reactions }} >
+        <ReactionContext.Provider value={{createReaction, getReactions, reactions, addPostReaction }} >
             { props.children }
         </ReactionContext.Provider>
     )
