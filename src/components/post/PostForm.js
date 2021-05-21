@@ -9,17 +9,33 @@ export const PostForm = (props) => {
     const { createPost, getPostById, editPost } = useContext(PostContext)
     const { getAllCategories, categories } = useContext(CategoryContext)
     const { getAllTags, tags } = useContext(TagContext)
+    const [b64, setB64] = useState("")
     const history = useHistory()
     const {postId} = useParams()
     const [post, setPost] = useState({
         "category_id": 0,
         "title": "",
         "content": "",
-        "tag_ids": []
+        "tag_ids": [],
+        "image_url":""
     })
-
+    const getBase64 = (file, callback) => {
+        const reader = new FileReader();
+        reader.addEventListener('load', () => callback(reader.result));
+        reader.readAsDataURL(file);
+    }
+    const createPostImageString = (event) => {
+        getBase64(event.target.files[0], (base64ImageString) => {
+            setB64(base64ImageString)
+        });
+    }
     useEffect(() => {
-        
+        let tempPost = {...post}
+        tempPost.image_url = b64
+        setPost(tempPost)
+      }, [b64])
+
+    useEffect(() => {     
         getAllCategories()
             .then(getAllTags).then(()=>{
                 if(postId){
@@ -32,6 +48,7 @@ export const PostForm = (props) => {
                           "category_id": res.category ? res.category.id:0,
                           "title": res.title,
                           "content": res.content,
+                          "image_url":res.image_url,
                           "tag_ids": tags})})
                 }
             })
@@ -77,6 +94,12 @@ export const PostForm = (props) => {
                     <Label for="postTitle">Title</Label>
                     <Input onChange={handleControlledInputChange} type="text" name="title" id="title" value={post.title} />
                 </FormGroup>
+                {post.image_url ? <></>:
+                <FormGroup>
+                    <Label for="reaction_image">image</Label>
+                    <Input type="file" id="reaction_image" onChange={createPostImageString} />
+                </FormGroup>
+                }
                 <FormGroup>
                     <Label for="postCategory">Category</Label>
                     <Input onChange={handleControlledInputChange} type="select" name="selectCategory" id="category_id" value={post.category_id}>

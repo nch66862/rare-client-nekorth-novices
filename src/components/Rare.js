@@ -6,16 +6,18 @@ import { Login } from "./auth/Login"
 import { Register } from "./auth/Register"
 import { UserProvider } from "./users/UserProvider"
 import { ImageProvider } from "./images/ImageProvider"
+import { Protected } from "./auth/Protected"
 
 export const Rare = () => (
     <>
         <ImageProvider>
-
             <Route render={() => {
                 if (localStorage.getItem("rare_user_id")) {
                     return <>
                         <UserProvider>
-                            <NavBar />
+                            <Protected>
+                                <NavBar />
+                            </Protected>
                             <ApplicationViews />
                         </UserProvider>
                     </>
