@@ -4,6 +4,7 @@ export const UserContext = createContext()
 
 export const UserProvider = (props) => {
     const [rareUsers, setUsers] = useState([])
+    const [loggedInUserId, setLoggedInUserId] = useState([])
     const getAllUsers = () => {
         return fetch("http://localhost:8000/users",{
             headers:{
@@ -91,7 +92,6 @@ export const UserProvider = (props) => {
             body: JSON.stringify({
                 "action": action,
                 "user_id": userId,
-                "approver_one_id": parseInt(localStorage.getItem("rare_user_id"))
             })
         })
     }
@@ -125,8 +125,7 @@ export const UserProvider = (props) => {
         })
     }
     return (
-        <UserContext.Provider value={{ getAllUsers, rareUsers, getUserById, changeSubscribed, checkSubscribed, changeAuthorStatus, checkAuthenticated, getInactiveUsers, getCurrentUser, updateUser, changeRank, subscriberCount }}>
-
+        <UserContext.Provider value={{ getAllUsers, rareUsers, getUserById, changeSubscribed, checkSubscribed, changeAuthorStatus, checkAuthenticated, getInactiveUsers, getCurrentUser, updateUser, changeRank, loggedInUserId, setLoggedInUserId, subscriberCount }}>
             {props.children}
         </UserContext.Provider>
     )
