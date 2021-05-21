@@ -13,7 +13,7 @@ export const PostList = () => {
   const [searchTerm, setSearchTerm] = useState("")
   const [sort, setSort] = useState("")
   const [gotApproval, setGotApproval] = useState(false)
-  const { getPostsByUserId, getAllPosts, approvePost, searchPosts, sortPostsByCategory, deletePost, sortPostsByUser, getUnapprovedPosts } = useContext(PostContext)
+  const { getPostsByUserId, getAllPosts, approvePost, searchPosts, sortPostsByCategory, deletePost, sortPostsByUser, getSubscribedPosts, getUnapprovedPosts } = useContext(PostContext)
   const history = useHistory()
   const urlPath = history.location.pathname
   const checkPath = () => {
@@ -27,6 +27,10 @@ export const PostList = () => {
     }
     else if (urlPath === "/posts/unapproved-posts") {
       getUnapprovedPosts()
+        .then(setPosts)
+    }
+    else if (urlPath === "/") {
+      getSubscribedPosts()
         .then(setPosts)
     }
   }
