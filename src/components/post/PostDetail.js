@@ -27,7 +27,7 @@ export const PostDetail = () => {
     'approved': false,
     'tag_set': [],
     'comment_set': [],
-    'reaction_set': []
+    'postreaction_set': []
   })
 
   const [dropdownOpen, setDropdownOpen] = useState(false)
@@ -41,12 +41,16 @@ export const PostDetail = () => {
         "reaction_id": parseInt(event.target.id),
         "post_id": post.id
       }
-      addPostReaction(newReaction).then(()=>getPostById(parseInt(postId)).then(setPost))
+      addPostReaction(newReaction).then(()=>getPostById(parseInt(postId)).then(res => {let tempPost = res.post
+        tempPost.comment_set = res.comments
+        setPost(tempPost)}))
   }
 
   useEffect(() => {
     getPostById(parseInt(postId))
-    .then(res => {setPost(res)
+    .then(res => {let tempPost = res.post
+                  tempPost.comment_set = res.comments
+                  setPost(tempPost)
                   getReactions()})
   }, [])
 
@@ -94,7 +98,7 @@ export const PostDetail = () => {
       {post.comment_set.map(comment => {
         return (
           <ListGroup key={comment.id} >
-            <CommentCard comment={comment} />
+            <CommentCard comment={comment} postId={postId} setPost={setPost} />
           </ListGroup>
         )
       })}

@@ -52,13 +52,13 @@ export const PostProvider = (props) => {
   }
 
   const approvePost = (postId) => {
-    return fetch(`http://localhost:8000/approve/${postId}`, {
-      method: "PATCH",
+    return fetch(`http://localhost:8000/posts/approved`, {
+      method: "PUT",
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
+        "Authorization": `Token ${localStorage.getItem("rare_user_id")}`,
+        "Content-Type":"application/json"
       },
-      body: JSON.stringify({})
+      body: JSON.stringify({"postId":postId})
     })
   }
   const sortPostsByCategory = (sort) => {
@@ -93,6 +93,14 @@ export const PostProvider = (props) => {
       body: JSON.stringify(post)
     })
   }
+  const getUnapprovedPosts = () => {
+    return fetch(`http://localhost:8000/posts?unapproved=true`,{
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
+      }
+    }).then(res=>res.json())
+  }
   
   const getSubscribedPosts = () => {
     return fetch(`http://localhost:8000/posts/subscribed_posts`,{
@@ -106,7 +114,7 @@ export const PostProvider = (props) => {
   return (
     <PostContext.Provider value={{
       getPostById, createPost, getAllPosts, getPostsByUserId, approvePost, 
-      deletePost, editPost, sortPostsByCategory, searchPosts, sortPostsByUser, getSubscribedPosts
+      deletePost, editPost, sortPostsByCategory, searchPosts, sortPostsByUser, getSubscribedPosts, getUnapprovedPosts
     }}>
       {props.children}
     </PostContext.Provider>
