@@ -9,9 +9,11 @@ export const UserDetail = () => {
     const { userId } = useParams()
     const [subscribed, setSubscribed] = useState(false)
     const history = useHistory()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         getUserById(userId).then(setRareUser)
     }, [subscribed])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         if (userId && rareUser.id) {
             checkSubscribed(parseInt(rareUser.id)).then(res => setSubscribed(res.subscribed))

@@ -13,6 +13,7 @@ export const CategoryList = () => {
     })
     const [categoryId, setCategoryId] = useState(0)
     const [deleteCheck, setDeleteCheck] = useState(false)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(()=>{
         getAllCategories()
     },[])

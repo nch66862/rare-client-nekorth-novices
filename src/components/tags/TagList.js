@@ -12,6 +12,7 @@ export const TagList = () => {
     })
     const [tagId, setTagId] = useState(0)
     const [deleteCheck, setDeleteCheck] = useState(false)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(()=>{
         getAllTags()
     },[])
