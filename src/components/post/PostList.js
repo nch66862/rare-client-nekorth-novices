@@ -13,7 +13,7 @@ export const PostList = () => {
   const [searchTerm, setSearchTerm] = useState("")
   const [sort, setSort] = useState("")
   const [gotApproval, setGotApproval] = useState(false)
-  const { getPostsByUserId, getAllPosts, approvePost, searchPosts, sortPostsByCategory, deletePost, sortPostsByUser } = useContext(PostContext)
+  const { getPostsByUserId, getAllPosts, approvePost, searchPosts, sortPostsByCategory, deletePost, sortPostsByUser, getUnapprovedPosts } = useContext(PostContext)
   const history = useHistory()
   const urlPath = history.location.pathname
   const checkPath = () => {
@@ -26,10 +26,8 @@ export const PostList = () => {
         .then(setPosts)
     }
     else if (urlPath === "/posts/unapproved-posts") {
-      getAllPosts()
-        .then(result => {
-
-        })
+      getUnapprovedPosts()
+        .then(setPosts)
     }
   }
   useEffect(() => {
@@ -59,10 +57,7 @@ export const PostList = () => {
 
   const handleApprovePost = (postId) => {
     approvePost(postId)
-      .then(() => {
-        setGotApproval(true)
-        setGotApproval(false)
-      })
+      .then(()=>checkPath())
   }
 
   return (
@@ -103,6 +98,7 @@ export const PostList = () => {
             }
             <ListGroupItemText>
               {urlPath === "/posts/unapproved-posts" && <Button onClick={() => handleApprovePost(post.id)}>Approve</Button>}
+              {localStorage.getItem("rare_user_admin") === "true" && post.approved ?<Button onClick={() => handleApprovePost(post.id)}>Unapprove</Button>:<></>}
             </ListGroupItemText>
           </ListGroupItem>)
         })}
@@ -110,26 +106,3 @@ export const PostList = () => {
     </section>
   )
 }
-
-
-const filterApprovedPosts = (posts) => {
-  return posts?.filter(post => {
-    return post.approved === true
-  })
-}
-
-const filterUnapprovedPosts = (posts) => {
-  return posts?.filter(post => {
-    return post.approved === false
-  })
-}
-
-const nonFuturePosts = (posts) => {
-  const today = new Date()
-  return posts?.filter(post => {
-    const dateArray = post.publicationDate.split("-")
-    const dateOfPublication = new Date(dateArray[0], dateArray[1] - 1, dateArray[2])
-    return today > dateOfPublication
-  })
-}
-
