@@ -46,7 +46,9 @@ export const PostDetail = () => {
 
   useEffect(() => {
     getPostById(parseInt(postId))
-    .then(res => {setPost(res)
+    .then(res => {let tempPost = res.post
+                  tempPost.comment_set = res.comments
+                  setPost(tempPost)
                   getReactions()})
   }, [])
 
@@ -94,7 +96,7 @@ export const PostDetail = () => {
       {post.comment_set.map(comment => {
         return (
           <ListGroup key={comment.id} >
-            <CommentCard comment={comment} />
+            <CommentCard comment={comment} postId={postId} setPost={setPost} />
           </ListGroup>
         )
       })}
