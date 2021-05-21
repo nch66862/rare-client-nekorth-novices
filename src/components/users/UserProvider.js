@@ -4,6 +4,7 @@ export const UserContext = createContext()
 
 export const UserProvider = (props) => {
     const [rareUsers, setUsers] = useState([])
+    const [loggedInUserId, setLoggedInUserId] = useState([])
     const getAllUsers = () => {
         return fetch("http://localhost:8000/users",{
             headers:{
@@ -105,7 +106,7 @@ export const UserProvider = (props) => {
         })
     }
     return (
-        <UserContext.Provider value={{ getAllUsers, rareUsers, getUserById, changeSubscribed, checkSubscribed, changeAuthorStatus, checkAuthenticated, getInactiveUsers, updateUser, changeRank }}>
+        <UserContext.Provider value={{ getAllUsers, rareUsers, getUserById, changeSubscribed, checkSubscribed, changeAuthorStatus, checkAuthenticated, getInactiveUsers, updateUser, changeRank, loggedInUserId, setLoggedInUserId }}>
 
             {props.children}
         </UserContext.Provider>
