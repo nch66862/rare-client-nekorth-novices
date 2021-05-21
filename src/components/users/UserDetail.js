@@ -64,18 +64,11 @@ export const UserDetail = () => {
                             {currentUser!== parseInt(userId) && <p>subscribed: {String(subscribed)}</p>}
                             
                     </CardText>
-<<<<<<< HEAD
                     {localStorage.getItem("rare_user_admin") === "true" && !rareUser.user?.is_active && <Button onClick={handleActivate}>Activate</Button>}
                     {localStorage.getItem("rare_user_admin") === "true" && rareUser.user?.is_active && !queued && <Button onClick={handleDeactivate}>Deactivate</Button>}
                     {queued && queued.admin === loggedInUserId && <Button disabled={true}>deactivation needs another admins approval</Button>}
                     {queued && queued.admin !== loggedInUserId && <Button onClick={handleDeactivate}>Confirm Deactivation</Button>}
-                    {rareUser.user?.is_active && <Button onClick={handleSubscribeClicked}>{subscribed ? "Unsubcribe" : "Subscribe"}</Button>}
-=======
-                    {localStorage.getItem("rare_user_admin") === "true" && !rareUser.user?.is_active && currentUser!== parseInt(userId) ? <Button onClick={handleActivate}>Activate</Button> :
-                    localStorage.getItem("rare_user_admin") === "true" && rareUser.user?.is_active && currentUser !== parseInt(userId) ? <Button onClick={handleDeactivate}>Deactivate</Button> : ""}
-
-                    {rareUser.user?.is_active && currentUser !== parseInt(userId) ? <Button onClick={handleSubscribeClicked}>{subscribed ? "Unsubcribe" : "Subscribe"}</Button> : ""}
->>>>>>> main
+                    {rareUser.user?.is_active && currentUser !== parseInt(userId) && <Button onClick={handleSubscribeClicked}>{subscribed ? "Unsubcribe" : "Subscribe"}</Button>}
                     {localStorage.getItem("rare_user_admin") === "true" && <Button onClick={() => history.push(`/users/detail/${rareUser.id}/edit`)}>edit</Button>}
                 </CardBody>
             </Card>
