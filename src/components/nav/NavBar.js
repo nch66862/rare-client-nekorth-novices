@@ -1,14 +1,22 @@
-import React from "react"
+import React, { useContext } from "react"
 import { Link, useHistory } from "react-router-dom"
 import "./NavBar.css"
 import Logo from "./image.png"
+import { UserContext } from "../users/UserProvider"
 
 export const NavBar = () => {
+    
+    const {openUserProfile} = useContext(UserContext)   
     const history = useHistory()
+
+    let profile = 0
+    openUserProfile()
+    .then(res => profile=res)
+
     return (
             <ul className="navbar">
                 <li className="navbar__item">
-                    <img className="navbar__logo" src={Logo} alt="tragic trolls logo" />
+                    <button onClick={() => history.push(`/users/detail/${profile}`)}><img className="navbar__logo" src={Logo} />User Profile</button>
                 </li>
                 <li className="navbar__item">
                     <Link className="navbar__link" to="/posts">Posts</Link>

@@ -11,7 +11,7 @@ export const UserDetail = () => {
     const history = useHistory()
     useEffect(() => {
         getUserById(userId).then(setRareUser)
-    }, [subscribed])
+    }, [])
     useEffect(() => {
         if (userId && rareUser.id) {
             checkSubscribed(parseInt(rareUser.id)).then(res => setSubscribed(res.subscribed))
@@ -48,6 +48,7 @@ export const UserDetail = () => {
                             Created On : {new Date(rareUser.created_on).toLocaleDateString("en-us")}<br></br>
                             subscriber count: {rareUser.subscribers}<br></br>
                             subscribed: {String(subscribed)}
+
                     </CardText>
                     {localStorage.getItem("rare_user_admin") === "true" && !rareUser.user?.is_active ? <Button onClick={handleActivate}>Activate</Button> :
                     localStorage.getItem("rare_user_admin") === "true" && rareUser.user?.is_active && <Button onClick={handleDeactivate}>Deactivate</Button>}
