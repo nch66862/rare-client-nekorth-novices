@@ -43,12 +43,12 @@ export const PostForm = (props) => {
                     getPostById(postId)
                     .then(res => {
                         console.log(res)
-                        let tags = res.tag_set.map(tag => tag.id)
+                        let tags = res.post.tag_set.map(tag => tag.id)
                         setPost({
-                          "category_id": res.category ? res.category.id:0,
-                          "title": res.title,
-                          "content": res.content,
-                          "image_url":res.image_url,
+                          "category_id": res.post.category ? res.post.category.id:0,
+                          "title": res.post.title,
+                          "content": res.post.content,
+                          "image_url":res.post.image_url,
                           "tag_ids": tags})})
                 }
             })
