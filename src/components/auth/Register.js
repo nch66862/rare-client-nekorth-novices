@@ -1,5 +1,6 @@
-import React, { useRef } from "react"
+import React, { useContext, useRef, useState } from "react"
 import { Link, useHistory } from "react-router-dom"
+import { ImageContext } from "../images/ImageProvider"
 import "./Auth.css"
 
 export const Register = (props) => {
@@ -12,6 +13,15 @@ export const Register = (props) => {
     const passwordDialog = useRef()
     const username = useRef()
     const history = useHistory()
+    const {createImageString, b64, setB64} = useContext(ImageContext)
+
+    // const [profileImage, setProfileImage] = useState("")
+
+    // const handleInputChange = (event) => {
+    //     let imageCopy = {...profileImage}
+    //     imageCopy[event.target.id] = event.target.value
+    //     setProfileImage(imageCopy)
+    // }
 
     const handleRegister = (e) => {
         e.preventDefault()
@@ -24,7 +34,7 @@ export const Register = (props) => {
                 "email": email.current.value,
                 "password": password.current.value,
                 "bio": bio.current.value,
-                "profile_image_url": "",
+                "profile_image_url": b64,
             }
 
             return fetch("http://127.0.0.1:8000/register", {
@@ -42,6 +52,7 @@ export const Register = (props) => {
                         history.push("/")
                     }
                 })
+                .then(setB64(""))
         } else {
             passwordDialog.current.showModal()
         }
@@ -55,7 +66,6 @@ export const Register = (props) => {
             </dialog>
             <form className="form--login" onSubmit={handleRegister}>
                 <h1 className="h3 mb-3 font-weight-normal">Register an account</h1>
-                date
                 <fieldset>
                     <label htmlFor="firstName"> First Name </label>
                     <input ref={firstName} type="text" name="firstName" className="form-control" placeholder="First name" required autoFocus />
@@ -83,6 +93,11 @@ export const Register = (props) => {
                 <fieldset>
                     <label htmlFor="verifyPassword"> Verify Password </label>
                     <input ref={verifyPassword} type="password" name="verifyPassword" className="form-control" placeholder="Verify password" required />
+                </fieldset>
+                <fieldset>
+                    <label htmlFor="reactionLabel">Upload a Profile Image </label> <br></br>
+                    {/* <input type="text" id="image" onChange={handleInputChange} value={profileImage}></input><br></br> */}
+                    <input type="file" id="profile_image_url" onChange={createImageString} />
                 </fieldset>
                 <fieldset style={{
                     textAlign: "center"

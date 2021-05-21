@@ -30,6 +30,16 @@ export const UserProvider = (props) => {
         })
         .then(res => res.json())
     }
+    const updateUser = (updatedUser) => {
+        return fetch(`http://localhost:8000/users/${updatedUser.id}`,{
+            method: "PUT",
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
+            },
+            body: JSON.stringify(updatedUser)
+        })
+    }
     // const getSubcriptions = (userId) => {
     //     return fetch(`http://localhost:8000/subscriptions/${userId}`)
     //     .then(res => res.json())
@@ -103,10 +113,19 @@ export const UserProvider = (props) => {
         })
         .then(res => res.json())
     }
+
+    const changeRank = (updatedUser) => {
+        return fetch(`http://localhost:8000/change-rank`,{
+            method:"PUT",
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
+            },
+            body: JSON.stringify(updatedUser)
+        })
+    }
     return (
-        <UserContext.Provider value={{ getAllUsers, rareUsers, getUserById, changeSubscribed, checkSubscribed, 
-                                        changeAuthorStatus, checkAuthenticated, getInactiveUsers, getCurrentUser, 
-                                        subscriberCount }}>
+        <UserContext.Provider value={{ getAllUsers, rareUsers, getUserById, changeSubscribed, checkSubscribed, changeAuthorStatus, checkAuthenticated, getInactiveUsers, getCurrentUser updateUser, changeRank, openUserProfile, subscriberCount }}>
 
             {props.children}
         </UserContext.Provider>

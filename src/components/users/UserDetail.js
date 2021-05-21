@@ -62,6 +62,7 @@ export const UserDetail = () => {
                     localStorage.getItem("rare_user_admin") === "true" && rareUser.user?.is_active && currentUser !== parseInt(userId) ? <Button onClick={handleDeactivate}>Deactivate</Button> : ""}
 
                     {rareUser.user?.is_active && currentUser !== parseInt(userId) ? <Button onClick={handleSubscribeClicked}>{subscribed ? "Unsubcribe" : "Subscribe"}</Button> : ""}
+                    {localStorage.getItem("rare_user_admin") === "true" && <Button onClick={() => history.push(`/users/detail/${rareUser.id}/edit`)}>edit</Button>}
                 </CardBody>
             </Card>
         </>

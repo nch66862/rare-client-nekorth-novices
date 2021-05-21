@@ -4,7 +4,6 @@ export const ReactionContext = createContext()
 
 export const ReactionProvider = props => {
 
-    const [b64, setB64] = useState("")
     const [reactions, setReactions] = useState([])
 
     const getReactions = () => {
@@ -15,18 +14,6 @@ export const ReactionProvider = props => {
       })
       .then(res => res.json())
       .then(setReactions)
-    }
-
-    const getBase64 = (file, callback) => {
-        const reader = new FileReader();
-        reader.addEventListener('load', () => callback(reader.result));
-        reader.readAsDataURL(file);
-    }
-    
-    const createReactionImageString = (event) => {
-        getBase64(event.target.files[0], (base64ImageString) => {
-            setB64(base64ImageString)
-        });
     }
 
     const createReaction = reaction => {
@@ -41,9 +28,19 @@ export const ReactionProvider = props => {
             .then(response => response.json())
             .then(getReactions)
     }
+    const addPostReaction = reaction => {
+        return fetch('http://localhost:8000/postreactions',{
+            method: "POST",
+            headers:{
+                "Authorization": `Token ${localStorage.getItem("rare_user_id")}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(reaction)
+        })
+    }
 
     return (
-        <ReactionContext.Provider value={{ createReactionImageString, b64, createReaction, getReactions, setB64, reactions }} >
+        <ReactionContext.Provider value={{createReaction, getReactions, reactions }} >
             { props.children }
         </ReactionContext.Provider>
     )
