@@ -5,6 +5,7 @@ import Logo from "./image.png"
 import { UserContext } from "../users/UserProvider"
 
 export const NavBar = () => {
+    let profile = 0
     
     const {openUserProfile} = useContext(UserContext)   
     const history = useHistory()
