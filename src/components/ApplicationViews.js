@@ -32,6 +32,11 @@ export const ApplicationViews = () => {
                             <ReactionProvider>
                                 <PostProvider>
                                     <CommentProvider>
+                                        <Route exact path="/">
+                                            <Protected>
+                                                <PostList />
+                                            </Protected>
+                                        </Route>
                                         <Route exact path="/tags">
                                             <Protected>
                                                 <TagList />
