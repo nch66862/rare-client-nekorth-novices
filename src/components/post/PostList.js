@@ -7,12 +7,11 @@ import { PostContext } from "./PostProvider";
 
 export const PostList = () => {
   const [posts, setPosts] = useState([])
-  const {categories, getAllCategories} = useContext(CategoryContext)
-  const {getAllUsers, rareUsers} = useContext(UserContext)
+  const { categories, getAllCategories } = useContext(CategoryContext)
+  const { getAllUsers, rareUsers } = useContext(UserContext)
   const [sortUser, setSortUser] = useState("")
   const [searchTerm, setSearchTerm] = useState("")
   const [sort, setSort] = useState("")
-  const [gotApproval, setGotApproval] = useState(false)
   const { getPostsByUserId, getAllPosts, approvePost, searchPosts, sortPostsByCategory, deletePost, sortPostsByUser, getSubscribedPosts, getUnapprovedPosts } = useContext(PostContext)
   const history = useHistory()
   const urlPath = history.location.pathname
@@ -35,7 +34,10 @@ export const PostList = () => {
     }
   }
   useEffect(() => {
-   getAllCategories().then(()=>getAllUsers()).then(()=>checkPath())
+    getAllCategories()
+      .then(() => getAllUsers())
+      .then(() => checkPath())
+  // eslint-disable-next-line
   }, [])
   useEffect(() => {
     if (searchTerm.length) {
@@ -43,25 +45,27 @@ export const PostList = () => {
     } else {
       checkPath()
     }
-},[searchTerm])
-  useEffect(()=>{
-    if(sort.length && sort !== "0"){
+  // eslint-disable-next-line
+  }, [searchTerm])
+  useEffect(() => {
+    if (sort.length && sort !== "0") {
       sortPostsByCategory(sort).then(setPosts)
-    }else{
+    } else {
       checkPath()
     }
-  },[sort])
-  useEffect(()=>{
-    if(sortUser.length && sortUser !== "0"){
+  // eslint-disable-next-line
+  }, [sort])
+  useEffect(() => {
+    if (sortUser.length && sortUser !== "0") {
       sortPostsByUser(sortUser).then(setPosts)
-    }else{
+    } else {
       checkPath()
     }
-  },[sortUser])
-
+  // eslint-disable-next-line
+  }, [sortUser])
   const handleApprovePost = (postId) => {
     approvePost(postId)
-      .then(()=>checkPath())
+      .then(() => checkPath())
   }
 
   return (
@@ -75,9 +79,9 @@ export const PostList = () => {
         {categories.map(category => <option value={category.id}>{category.label}</option>)}
       </select>
       <select name="sort_user" className="form-control" value={sortUser}
-        onChange={(e)=> setSortUser(e.target.value)}>
-          <option value="0">Sort By User ...</option>
-          {rareUsers.map(rareUser => <option value={rareUser.id}>{rareUser.user.username}</option>)}
+        onChange={(e) => setSortUser(e.target.value)}>
+        <option value="0">Sort By User ...</option>
+        {rareUsers.map(rareUser => <option value={rareUser.id}>{rareUser.user.username}</option>)}
       </select>
       <ListGroup>
         {posts?.map(post => {
@@ -102,7 +106,7 @@ export const PostList = () => {
             }
             <ListGroupItemText>
               {urlPath === "/posts/unapproved-posts" && <Button onClick={() => handleApprovePost(post.id)}>Approve</Button>}
-              {localStorage.getItem("rare_user_admin") === "true" && post.approved ?<Button onClick={() => handleApprovePost(post.id)}>Unapprove</Button>:<></>}
+              {localStorage.getItem("rare_user_admin") === "true" && post.approved ? <Button onClick={() => handleApprovePost(post.id)}>Unapprove</Button> : <></>}
             </ListGroupItemText>
           </ListGroupItem>)
         })}

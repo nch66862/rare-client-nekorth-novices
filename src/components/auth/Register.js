@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react"
+import React, { useContext, useRef } from "react"
 import { Link, useHistory } from "react-router-dom"
 import { ImageContext } from "../images/ImageProvider"
 import "./Auth.css"
@@ -15,17 +15,8 @@ export const Register = (props) => {
     const history = useHistory()
     const {createImageString, b64, setB64} = useContext(ImageContext)
 
-    // const [profileImage, setProfileImage] = useState("")
-
-    // const handleInputChange = (event) => {
-    //     let imageCopy = {...profileImage}
-    //     imageCopy[event.target.id] = event.target.value
-    //     setProfileImage(imageCopy)
-    // }
-
     const handleRegister = (e) => {
         e.preventDefault()
-
         if (password.current.value === verifyPassword.current.value) {
             const newUser = {
                 "username": username.current.value,
@@ -36,7 +27,6 @@ export const Register = (props) => {
                 "bio": bio.current.value,
                 "profile_image_url": b64,
             }
-
             return fetch("http://127.0.0.1:8000/register", {
                 method: "POST",
                 headers: {
@@ -57,7 +47,6 @@ export const Register = (props) => {
             passwordDialog.current.showModal()
         }
     }
-
     return (
         <main style={{ textAlign: "center" }}>
             <dialog className="dialog dialog--password" ref={passwordDialog}>
@@ -96,7 +85,6 @@ export const Register = (props) => {
                 </fieldset>
                 <fieldset>
                     <label htmlFor="reactionLabel">Upload a Profile Image </label> <br></br>
-                    {/* <input type="text" id="image" onChange={handleInputChange} value={profileImage}></input><br></br> */}
                     <input type="file" id="profile_image_url" onChange={createImageString} />
                 </fieldset>
                 <fieldset style={{

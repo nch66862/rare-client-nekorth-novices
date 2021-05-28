@@ -13,10 +13,14 @@ export const UserDetail = () => {
     const history = useHistory()
     const urlPath = history.location.pathname
     useEffect(() => {
-        getUserById(userId).then(setRareUser)
+        getUserById(userId)
+            .then(setRareUser)
+        // eslint-disable-next-line
     }, [subscribed])
     useEffect(() => {
-        getUserById(userId).then(setRareUser)
+        getUserById(userId)
+            .then(setRareUser)
+        // eslint-disable-next-line
     }, [urlPath])
     useEffect(() => {
         if (userId && rareUser.id) {
@@ -24,30 +28,35 @@ export const UserDetail = () => {
             .then(res => setSubscribed(res.subscribed))
             .then(() => setQueued(rareUser.user_to_change?.find(row => row.approver === null && row.action === "deactivate")))
         }
+    // eslint-disable-next-line
     }, [rareUser])
     const handleActivate = () => {
-        changeAuthorStatus(rareUser.id, "activate").then(res => getUserById(rareUser.id)).then(setRareUser)
+        changeAuthorStatus(rareUser.id, "activate")
+            .then(res => getUserById(rareUser.id))
+            .then(setRareUser)
     }
     const handleDeactivate = () => {
-        changeAuthorStatus(rareUser.id, "deactivate").then(res => getUserById(rareUser.id)).then(setRareUser)
+        changeAuthorStatus(rareUser.id, "deactivate")
+            .then(res => getUserById(rareUser.id))
+            .then(setRareUser)
     }
     const handleSubscribeClicked = () => {
         let subscription = {
             "author_id": rareUser.id,
         }
         if (subscribed) {
-            changeSubscribed(false, subscription).then(setSubscribed(false))
+            changeSubscribed(false, subscription)
+                .then(setSubscribed(false))
         } else {
-            changeSubscribed(true, subscription).then(setSubscribed(true))
+            changeSubscribed(true, subscription)
+                .then(setSubscribed(true))
         }
-
     }
-
     useEffect(() => {
         getCurrentUser()
         .then(setCurrentUser)
+        // eslint-disable-next-line
     }, [])
-
     return (
         <>
             <Card>

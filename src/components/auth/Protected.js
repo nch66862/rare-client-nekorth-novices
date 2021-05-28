@@ -24,6 +24,7 @@ export const Protected = (props) => {
                     history.push("/login")
                 }
             })
+    // eslint-disable-next-line
     }, [])
     return !isLoading ? props.children : null
 }

@@ -6,9 +6,9 @@ import { UserContext } from "./UserProvider"
 export const UserList = () => {
     const {rareUsers, getAllUsers} = useContext(UserContext)
     const history = useHistory()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(()=>{
         getAllUsers()
+        // eslint-disable-next-line
     },[])
     return(
         <>

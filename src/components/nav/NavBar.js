@@ -7,15 +7,13 @@ import { UserContext } from "../users/UserProvider"
 export const NavBar = () => {
     let profile = 0
     const history = useHistory()
-
     const {getCurrentUser} = useContext(UserContext)   
     getCurrentUser()
-    .then(res => profile=res)
-
+        .then(res => profile=res)
     return (
             <ul className="navbar">
                 <li className="navbar__item">
-                    <button onClick={() => history.push(`/users/detail/${profile}`)}><img className="navbar__logo" src={Logo} />User Profile</button>
+                    <button onClick={() => history.push(`/users/detail/${profile}`)}><img className="navbar__logo" src={Logo} alt="site logo" />User Profile</button>
                 </li>
                 <li className="navbar__item">
                     <Link className="navbar__link" to="/">Home</Link>

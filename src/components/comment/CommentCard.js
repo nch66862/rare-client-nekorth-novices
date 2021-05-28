@@ -8,8 +8,6 @@ export const CommentCard = (props) => {
   const {deleteComment, setNewComment} = useContext(CommentContext)
   const {getPostById} = useContext(PostContext)
 
-  const currentUser = parseInt(localStorage.getItem("rare_user_id"))
-
   const renderButtons = () => {
     if (props.comment.owner){
       return (
@@ -33,6 +31,7 @@ export const CommentCard = (props) => {
 
   const handleDeleteButtonClick = (event) => {
     event.preventDefault()
+    // eslint-disable-next-line
     const [prefix, id] = event.target.id.split("--")
     deleteComment(parseInt(id)).then(()=>getPostById(props.postId)).then((res)=>{ let tempPost = res.post
       tempPost.comment_set = res.comments

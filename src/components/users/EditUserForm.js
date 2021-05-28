@@ -29,6 +29,7 @@ export const EditUserForm = () => {
                     isAdmin: rareUser.user.is_staff
                 })
             })
+    // eslint-disable-next-line
     }, [])
     const handleEditUser = (event) => {
         event.preventDefault()

@@ -5,19 +5,19 @@ import { CategoryContext } from "../categories/CategoryProvider"
 import { TagContext } from "../tags/TagProvider"
 import { PostContext } from "./PostProvider"
 
-export const PostForm = (props) => {
+export const PostForm = () => {
     const { createPost, getPostById, editPost } = useContext(PostContext)
     const { getAllCategories, categories } = useContext(CategoryContext)
     const { getAllTags, tags } = useContext(TagContext)
     const [b64, setB64] = useState("")
     const history = useHistory()
-    const {postId} = useParams()
+    const { postId } = useParams()
     const [post, setPost] = useState({
         "category_id": 0,
         "title": "",
         "content": "",
         "tag_ids": [],
-        "image_url":""
+        "image_url": ""
     })
     const getBase64 = (file, callback) => {
         const reader = new FileReader();
@@ -30,33 +30,35 @@ export const PostForm = (props) => {
         });
     }
     useEffect(() => {
-        let tempPost = {...post}
+        let tempPost = { ...post }
         tempPost.image_url = b64
         setPost(tempPost)
-      }, [b64])
-
-    useEffect(() => {     
+        // eslint-disable-next-line
+    }, [b64])
+    useEffect(() => {
         getAllCategories()
-            .then(getAllTags).then(()=>{
-                if(postId){
+            .then(getAllTags).then(() => {
+                if (postId) {
                     console.log(postId)
                     getPostById(postId)
-                    .then(res => {
-                        console.log(res)
-                        let tags = res.post.tag_set.map(tag => tag.id)
-                        setPost({
-                          "category_id": res.post.category ? res.post.category.id:0,
-                          "title": res.post.title,
-                          "content": res.post.content,
-                          "image_url":res.post.image_url,
-                          "tag_ids": tags})})
+                        .then(res => {
+                            console.log(res)
+                            let tags = res.post.tag_set.map(tag => tag.id)
+                            setPost({
+                                "category_id": res.post.category ? res.post.category.id : 0,
+                                "title": res.post.title,
+                                "content": res.post.content,
+                                "image_url": res.post.image_url,
+                                "tag_ids": tags
+                            })
+                        })
                 }
             })
+        // eslint-disable-next-line
     }, [])
-
     const handleControlledInputChange = (event) => {
         let newPost = { ...post }
-        if (event.target.name == "tag_ids") {
+        if (event.target.name === "tag_ids") {
             const tag = parseInt(event.target.value)
             const tagIndex = post.tag_ids.indexOf(tag)
             if (tagIndex > -1) {
@@ -66,7 +68,7 @@ export const PostForm = (props) => {
             }
             setPost(newPost)
         }
-        else if (event.target.id == "category_id") {
+        else if (event.target.id === "category_id") {
             newPost[event.target.id] = parseInt(event.target.value)
             setPost(newPost)
         }
@@ -75,17 +77,15 @@ export const PostForm = (props) => {
             setPost(newPost)
         }
     }
-
     const handleSubmitClick = (event) => {
-        if(postId){
+        if (postId) {
             editPost(post, postId)
-            .then(result => history.push(`/posts/detail/${postId}`))
-        }else{
+                .then(result => history.push(`/posts/detail/${postId}`))
+        } else {
             createPost(post)
                 .then(result => history.push(`/posts/detail/${result.id}`))
         }
     }
-
     return (
         <Form className="postForm" autoComplete="on">
             <h2 className="postForm__title">New Post</h2>
@@ -94,11 +94,11 @@ export const PostForm = (props) => {
                     <Label for="postTitle">Title</Label>
                     <Input onChange={handleControlledInputChange} type="text" name="title" id="title" value={post.title} />
                 </FormGroup>
-                {post.image_url ? <></>:
-                <FormGroup>
-                    <Label for="reaction_image">image</Label>
-                    <Input type="file" id="reaction_image" onChange={createPostImageString} />
-                </FormGroup>
+                {post.image_url ? <></> :
+                    <FormGroup>
+                        <Label for="reaction_image">image</Label>
+                        <Input type="file" id="reaction_image" onChange={createPostImageString} />
+                    </FormGroup>
                 }
                 <FormGroup>
                     <Label for="postCategory">Category</Label>
@@ -111,7 +111,7 @@ export const PostForm = (props) => {
                 </FormGroup>
                 <FormGroup>
                     <Label for="postContent">Your Thoughts</Label>
-                    <Input onChange={handleControlledInputChange} type="textarea" name="text" id="content" value={post.content}/>
+                    <Input onChange={handleControlledInputChange} type="textarea" name="text" id="content" value={post.content} />
                 </FormGroup>
                 <FormGroup>
                     <ListGroup horizontal>

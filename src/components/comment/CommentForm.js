@@ -27,14 +27,13 @@ export const CommentForm = (props) => {
       "post_id": props.postId
     })
   }
-
   useEffect(() => {
     setNewComment({
       "content": "",
       "post_id": props.postId
     })
+    // eslint-disable-next-line
   }, [])
-
   return (
     <form className="commentForm" autoComplete="off">
       <h2 className="commentForm__title">New Comment</h2>
