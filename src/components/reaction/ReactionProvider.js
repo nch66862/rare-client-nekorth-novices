@@ -7,7 +7,7 @@ export const ReactionProvider = props => {
     const [reactions, setReactions] = useState([])
 
     const getReactions = () => {
-      return fetch("http://localhost:8000/reactions",{
+      return fetch("https://nac-rare-server.herokuapp.com/reactions",{
         headers:{
           "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
         }
@@ -17,7 +17,7 @@ export const ReactionProvider = props => {
     }
 
     const createReaction = reaction => {
-        return fetch(`http://localhost:8000/reactions`, {
+        return fetch(`https://nac-rare-server.herokuapp.com/reactions`, {
             method: "POST",
             headers:{
                 "Authorization": `Token ${localStorage.getItem("rare_user_id")}`,
@@ -29,7 +29,7 @@ export const ReactionProvider = props => {
             .then(getReactions)
     }
     const addPostReaction = reaction => {
-        return fetch('http://localhost:8000/postreactions',{
+        return fetch('https://nac-rare-server.herokuapp.com/postreactions',{
             method: "POST",
             headers:{
                 "Authorization": `Token ${localStorage.getItem("rare_user_id")}`,

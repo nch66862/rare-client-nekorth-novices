@@ -6,7 +6,7 @@ export const UserProvider = (props) => {
     const [rareUsers, setUsers] = useState([])
     const [loggedInUserId, setLoggedInUserId] = useState([])
     const getAllUsers = () => {
-        return fetch("http://localhost:8000/users",{
+        return fetch("https://nac-rare-server.herokuapp.com/users",{
             headers:{
                 "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
             }
@@ -15,7 +15,7 @@ export const UserProvider = (props) => {
         .then(setUsers)
     }
     const getInactiveUsers = () => {
-        return fetch("http://localhost:8000/users/inactive",{
+        return fetch("https://nac-rare-server.herokuapp.com/users/inactive",{
             headers:{
                 "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
             }
@@ -24,7 +24,7 @@ export const UserProvider = (props) => {
         .then(setUsers)
     }
     const getUserById = (userId) =>{
-        return fetch(`http://localhost:8000/users/${userId}`,{
+        return fetch(`https://nac-rare-server.herokuapp.com/users/${userId}`,{
             headers:{
                 "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
             }
@@ -32,7 +32,7 @@ export const UserProvider = (props) => {
         .then(res => res.json())
     }
     const updateUser = (updatedUser) => {
-        return fetch(`http://localhost:8000/users/${updatedUser.id}`,{
+        return fetch(`https://nac-rare-server.herokuapp.com/users/${updatedUser.id}`,{
             method: "PUT",
             headers:{
                 "Content-Type":"application/json",
@@ -42,12 +42,12 @@ export const UserProvider = (props) => {
         })
     }
     // const getSubcriptions = (userId) => {
-    //     return fetch(`http://localhost:8000/subscriptions/${userId}`)
+    //     return fetch(`https://nac-rare-server.herokuapp.com/subscriptions/${userId}`)
     //     .then(res => res.json())
     //     .then(res => console.log("subcriptions: ",res))
     // }
     const checkSubscribed = (authorId) => {
-        return fetch("http://localhost:8000/users/subscription_status", {
+        return fetch("https://nac-rare-server.herokuapp.com/users/subscription_status", {
             method: "POST",
             headers:{
                 "Content-Type":"application/json",
@@ -60,7 +60,7 @@ export const UserProvider = (props) => {
             .then(res => res.json())
     }
     const changeSubscribed = (subscribing, subscription) => {
-        return fetch("http://localhost:8000/users/subscription",{
+        return fetch("https://nac-rare-server.herokuapp.com/users/subscription",{
             method: subscribing ? "POST" : "DELETE",
             // method:"POST",
             headers:{
@@ -71,7 +71,7 @@ export const UserProvider = (props) => {
         })
     }
     const checkAuthenticated = () => {
-        return fetch(`http://localhost:8000/check-active`, {
+        return fetch(`https://nac-rare-server.herokuapp.com/check-active`, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
@@ -83,7 +83,7 @@ export const UserProvider = (props) => {
             })
     }
     const changeAuthorStatus = (userId, action) => {
-        return fetch(`http://localhost:8000/change-active`,{
+        return fetch(`https://nac-rare-server.herokuapp.com/change-active`,{
             method:"PUT",
             headers:{
                 "Content-Type":"application/json",
@@ -97,7 +97,7 @@ export const UserProvider = (props) => {
     }
 
     const getCurrentUser = () => {
-        return fetch("http://localhost:8000/users/user_profile",{
+        return fetch("https://nac-rare-server.herokuapp.com/users/user_profile",{
             headers:{
                 "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
             }
@@ -106,7 +106,7 @@ export const UserProvider = (props) => {
     }
 
     const subscriberCount = () => {
-        return fetch("http://localhost:8000/users/subscriber_count",{
+        return fetch("https://nac-rare-server.herokuapp.com/users/subscriber_count",{
             headers:{
                 "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
             }
@@ -115,7 +115,7 @@ export const UserProvider = (props) => {
     }
 
     const changeRank = (updatedUser) => {
-        return fetch(`http://localhost:8000/change-rank`,{
+        return fetch(`https://nac-rare-server.herokuapp.com/change-rank`,{
             method:"PUT",
             headers:{
                 "Content-Type":"application/json",

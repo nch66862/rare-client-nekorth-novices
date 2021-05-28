@@ -6,7 +6,7 @@ export const TagProvider = (props) => {
     const [tags, setTags] = useState([])
 
     const getAllTags = () => {
-        return fetch("http://localhost:8000/tags",{
+        return fetch("https://nac-rare-server.herokuapp.com/tags",{
             headers:{
                 "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
             }
@@ -15,7 +15,7 @@ export const TagProvider = (props) => {
         .then(setTags)
     }
     const addTag = (tag) => {
-        return fetch("http://localhost:8000/tags",{
+        return fetch("https://nac-rare-server.herokuapp.com/tags",{
             method: "POST",
             headers:{
                 "Authorization": `Token ${localStorage.getItem("rare_user_id")}`,
@@ -26,7 +26,7 @@ export const TagProvider = (props) => {
         .then(getAllTags)
     }
     const deleteTag = (tagId) => {
-        return fetch(`http://localhost:8000/tags/${tagId}`,{
+        return fetch(`https://nac-rare-server.herokuapp.com/tags/${tagId}`,{
             method: "DELETE",
             headers:{
                 "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
@@ -35,7 +35,7 @@ export const TagProvider = (props) => {
         .then(getAllTags)
     }
     const updateTag = (tag) => {
-        return fetch(`http://localhost:8000/tags/${tag.id}`,{
+        return fetch(`https://nac-rare-server.herokuapp.com/tags/${tag.id}`,{
             method: "PUT",
             headers:{
                 "Authorization": `Token ${localStorage.getItem("rare_user_id")}`,

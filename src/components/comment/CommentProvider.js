@@ -8,7 +8,7 @@ export const CommentProvider = (props) => {
     "post_id": 0
   })
   const createComment = (comment) => {
-    return fetch("http://localhost:8000/comments", {
+    return fetch("https://nac-rare-server.herokuapp.com/comments", {
       method: "POST",
       headers: {
         "Authorization": `Token ${localStorage.getItem("rare_user_id")}`,
@@ -18,7 +18,7 @@ export const CommentProvider = (props) => {
     })
   }
   const deleteComment = (id) => {
-    return fetch(`http://localhost:8000/comments/${id}`, {
+    return fetch(`https://nac-rare-server.herokuapp.com/comments/${id}`, {
       method: "DELETE",
       headers:{
         "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
@@ -26,7 +26,7 @@ export const CommentProvider = (props) => {
     })
   }
   const editComment = (comment) => {
-    return fetch(`http://localhost:8000/comments/${comment.id}`, {
+    return fetch(`https://nac-rare-server.herokuapp.com/comments/${comment.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

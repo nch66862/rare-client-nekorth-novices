@@ -6,7 +6,7 @@ export const ProfileProvider = (props) => {
     const [profile, setProfile] = useState({events:[]})
 
     const getProfile = () => {
-        return fetch("http://localhost:8000/profile", {
+        return fetch("https://nac-rare-server.herokuapp.com/profile", {
             headers: {
                 "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
             }

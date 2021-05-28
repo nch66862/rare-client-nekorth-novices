@@ -6,7 +6,7 @@ export const CategoryProvider = (props) => {
     const [categories, setCategories] = useState([])
 
     const getAllCategories = () => {
-        return fetch("http://localhost:8000/categories",{
+        return fetch("https://nac-rare-server.herokuapp.com/categories",{
             headers:{
                 "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
             }
@@ -15,7 +15,7 @@ export const CategoryProvider = (props) => {
         .then(setCategories)
     }
     const addCategory = (category) => {
-        return fetch("http://localhost:8000/categories",{
+        return fetch("https://nac-rare-server.herokuapp.com/categories",{
             method: "POST",
             headers:{
                 "Content-Type":"application/json",
@@ -26,7 +26,7 @@ export const CategoryProvider = (props) => {
         .then(getAllCategories)
     }
     const deleteCategory = (categoryId) => {
-        return fetch(`http://localhost:8000/categories/${categoryId}`,{
+        return fetch(`https://nac-rare-server.herokuapp.com/categories/${categoryId}`,{
             method: "DELETE",
             headers:{
                 "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
@@ -35,7 +35,7 @@ export const CategoryProvider = (props) => {
         .then(getAllCategories)
     }
     const updateCategory = (category) => {
-        return fetch(`http://localhost:8000/categories/${category.id}`,{
+        return fetch(`https://nac-rare-server.herokuapp.com/categories/${category.id}`,{
             method: "PUT",
             headers:{
                 "Content-Type":"application/json",

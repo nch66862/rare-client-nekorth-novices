@@ -5,7 +5,7 @@ export const PostContext = createContext()
 export const PostProvider = (props) => {
 
   const getAllPosts = () => {
-    return fetch(`http://localhost:8000/posts`,{
+    return fetch(`https://nac-rare-server.herokuapp.com/posts`,{
       headers:{
         "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
       }
@@ -13,7 +13,7 @@ export const PostProvider = (props) => {
     .then(res => res.json())
   }
   const searchPosts = (search) => {
-    return fetch(`http://localhost:8000/posts?q=${search}`,{
+    return fetch(`https://nac-rare-server.herokuapp.com/posts?q=${search}`,{
         headers:{
             "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
         }
@@ -22,7 +22,7 @@ export const PostProvider = (props) => {
   }
 
   const getPostById = (id) => {
-    return fetch(`http://localhost:8000/posts/${id}`,{
+    return fetch(`https://nac-rare-server.herokuapp.com/posts/${id}`,{
       headers:{
         "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
       }
@@ -31,7 +31,7 @@ export const PostProvider = (props) => {
   }
 
   const getPostsByUserId = () => {
-    return fetch(`http://localhost:8000/posts?user_id=1`,{
+    return fetch(`https://nac-rare-server.herokuapp.com/posts?user_id=1`,{
       headers:{
         "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
       }
@@ -40,7 +40,7 @@ export const PostProvider = (props) => {
   }
 
   const createPost = (postBody) => {
-    return fetch("http://localhost:8000/posts", {
+    return fetch("https://nac-rare-server.herokuapp.com/posts", {
       method: "POST",
       headers: {
         "Authorization": `Token ${localStorage.getItem("rare_user_id")}`,
@@ -52,7 +52,7 @@ export const PostProvider = (props) => {
   }
 
   const approvePost = (postId) => {
-    return fetch(`http://localhost:8000/posts/approved`, {
+    return fetch(`https://nac-rare-server.herokuapp.com/posts/approved`, {
       method: "PUT",
       headers: {
         "Authorization": `Token ${localStorage.getItem("rare_user_id")}`,
@@ -62,21 +62,21 @@ export const PostProvider = (props) => {
     })
   }
   const sortPostsByCategory = (sort) => {
-    return fetch(`http://localhost:8000/posts?category=${sort}`,{
+    return fetch(`https://nac-rare-server.herokuapp.com/posts?category=${sort}`,{
       headers: {
         "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
       }
     }).then(res=>res.json())
   }
   const sortPostsByUser = (sort) => {
-    return fetch(`http://localhost:8000/posts?user=${sort}`,{
+    return fetch(`https://nac-rare-server.herokuapp.com/posts?user=${sort}`,{
       headers: {
         "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
       }
     }).then(res=>res.json())
   }
   const deletePost = (postId) => {
-    return fetch(`http://localhost:8000/posts/${postId}`,{
+    return fetch(`https://nac-rare-server.herokuapp.com/posts/${postId}`,{
       method:"DELETE",
       headers:{
         "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
@@ -84,7 +84,7 @@ export const PostProvider = (props) => {
     })
   }
   const editPost = (post, postId) => {
-    return fetch(`http://localhost:8000/posts/${postId}`,{
+    return fetch(`https://nac-rare-server.herokuapp.com/posts/${postId}`,{
       method:"PUT",
       headers: {
         "Content-Type": "application/json",
@@ -94,7 +94,7 @@ export const PostProvider = (props) => {
     })
   }
   const getUnapprovedPosts = () => {
-    return fetch(`http://localhost:8000/posts?unapproved=true`,{
+    return fetch(`https://nac-rare-server.herokuapp.com/posts?unapproved=true`,{
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
@@ -103,7 +103,7 @@ export const PostProvider = (props) => {
   }
   
   const getSubscribedPosts = () => {
-    return fetch(`http://localhost:8000/posts/subscribed_posts`,{
+    return fetch(`https://nac-rare-server.herokuapp.com/posts/subscribed_posts`,{
       headers:{
         "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
       }
