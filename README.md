@@ -1,31 +1,11 @@
 # Rare: The Publishing Platform for the Discerning Writer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A place to share the moments of your life
 
-## Utilities
+<a href="https://nac-rare.netlify.app">THIS SITE IS LIVE</a>
 
-In the `utils` directory, there is a **`HumanDate`** component that you can use anywhere in your application to display a human-friendly date instead of the unfriendly format that is stored in the API database.
+<a href="https://dbdiagram.io/d/5f885a013a78976d7b77cb74">Link to ERD</a>
 
+<a href="https://www.figma.com/file/yjIldZoIsN6UyOsIRjc1tN/Rare-Wireframe?node-id=0%3A1">Link to Wireframe</a>
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `yarn start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
+A link to the server repo is <a href="https://github.com/nch66862/rare-server-nekorth-novices">HERE</a>
