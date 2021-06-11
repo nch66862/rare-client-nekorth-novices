@@ -75,7 +75,7 @@ export const PostList = () => {
       {urlPath === "/posts/unapproved-posts" && <h3>Unapproved Posts</h3>}
       {urlPath === "/" && <h3>Subscriptions</h3>}
       <label htmlFor="searchTerm">Search:</label>
-      <input type="text" name="searchTerm" autoFocus className="form-control" value={searchTerm}
+      <input type="text" name="searchTerm" autoFocus className="form-control" value={searchTerm} placeholder="search"
         onChange={(e) => { setSearchTerm(e.target.value) }} />
       <select name="sort_query" className="form-control" value={sort}
         onChange={(e) => setSort(e.target.value)}>
