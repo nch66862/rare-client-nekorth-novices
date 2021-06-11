@@ -70,6 +70,10 @@ export const PostList = () => {
 
   return (
     <section>
+      {urlPath === "/posts/my-posts" && <h3>My Posts</h3>}
+      {urlPath === "/posts" && <h3>Community Posts</h3>}
+      {urlPath === "/posts/unapproved-posts" && <h3>Unapproved Posts</h3>}
+      {urlPath === "/" && <h3>Subscriptions</h3>}
       <label htmlFor="searchTerm">Search:</label>
       <input type="text" name="searchTerm" autoFocus className="form-control" value={searchTerm}
         onChange={(e) => { setSearchTerm(e.target.value) }} />
@@ -83,10 +87,6 @@ export const PostList = () => {
         <option value="0">Sort By User ...</option>
         {rareUsers.map(rareUser => <option value={rareUser.id}>{rareUser.user.username}</option>)}
       </select>
-      {urlPath === "/posts/my-posts" && <h3>My Posts</h3>}
-      {urlPath === "/posts" && <h3>Community Posts</h3>}
-      {urlPath === "/posts/unapproved-posts" && <h3>Unapproved Posts</h3>}
-      {urlPath === "/" && <h3>Subscriptions</h3>}
       <ListGroup>
         {posts?.map(post => {
           return (<ListGroupItem key={post.id}>

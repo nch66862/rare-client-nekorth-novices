@@ -13,7 +13,7 @@ export const NavBar = () => {
     return (
             <ul className="navbar">
                 <li className="navbar__item">
-                    <button onClick={() => history.push(`/users/detail/${profile}`)}><img className="navbar__logo" src={Logo} alt="site logo" />User Profile</button>
+                    <button onClick={() => history.push(`/users/detail/${profile}`)}><img className="navbar__logo" src={Logo} alt="site logo" />My Profile</button>
                 </li>
                 <li className="navbar__item">
                     <Link className="navbar__link" to="/">Home</Link>
