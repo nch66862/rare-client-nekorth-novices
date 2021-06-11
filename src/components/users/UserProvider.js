@@ -124,8 +124,19 @@ export const UserProvider = (props) => {
             body: JSON.stringify(updatedUser)
         })
     }
+
+    const deleteUser = (userId) => {
+        return fetch(`https://nac-rare-server.herokuapp.com/users/${userId}`,{
+            method:"DELETE",
+            headers:{
+                "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
+            },
+        })
+        .then(() => getAllUsers())
+    }
+
     return (
-        <UserContext.Provider value={{ getAllUsers, rareUsers, getUserById, changeSubscribed, checkSubscribed, changeAuthorStatus, checkAuthenticated, getInactiveUsers, getCurrentUser, updateUser, changeRank, loggedInUserId, setLoggedInUserId, subscriberCount }}>
+        <UserContext.Provider value={{ getAllUsers, rareUsers, getUserById, changeSubscribed, checkSubscribed, changeAuthorStatus, checkAuthenticated, getInactiveUsers, getCurrentUser, updateUser, changeRank, loggedInUserId, setLoggedInUserId, subscriberCount, deleteUser }}>
             {props.children}
         </UserContext.Provider>
     )

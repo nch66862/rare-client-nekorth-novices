@@ -7,7 +7,7 @@ import { UserContext } from "./UserProvider"
 export const EditUserForm = () => {
     const history = useHistory()
     const { userId } = useParams()
-    const { getUserById, updateUser, changeRank } = useContext(UserContext)
+    const { getUserById, updateUser, changeRank, deleteUser } = useContext(UserContext)
     const [editedUser, setEditedUser] = useState({
         firstName: "",
         lastName: "",
@@ -47,6 +47,10 @@ export const EditUserForm = () => {
         newUserObj[event.target.name] = event.target.checked
         setEditedUser(newUserObj)
     }
+    const handleDeleteUser = () => {
+        deleteUser(editedUser.id)
+            .then(() => history.push("/users"))
+    }
     return (
         <main style={{ textAlign: "center" }}>
             <form className="form--login" onSubmit={handleEditUser}>
@@ -81,6 +85,7 @@ export const EditUserForm = () => {
                     textAlign: "center"
                 }}>
                     <Button type="submit">Submit Edit</Button>
+                    <Button onClick={handleDeleteUser}>Delete User</Button>
                 </fieldset>
             </form>
             <section className="link--register">
