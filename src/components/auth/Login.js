@@ -91,7 +91,8 @@ export const Login = () => {
                 <button className="button--close" onClick={e => invalidDialog.current.close()}>Close</button>
             </dialog>
             <section>
-                <form className="form--login" onSubmit={handleLogin}>
+                {/* <form className="form--login" onSubmit={handleLogin}> */}
+                <form className="form--login">
                     <h1>Rare Publishing</h1>
                     <h2>Please sign in</h2>
                     <button className="btn btn-1 btn-sep icon-send" onClick={handleNickSignIn}>Sign In as Nick Carver</button>
